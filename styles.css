@@ -436,6 +436,22 @@ body {
     transition: width linear;
 }
 
+.inventory-item .quantity {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: #FF4444; /* Red background for quantity */
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .store-item i {
     display: inline-block;
     width: 30px; /* Set a fixed width for the box */

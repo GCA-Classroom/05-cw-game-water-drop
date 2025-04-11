@@ -43,11 +43,15 @@ function startGame() {
     // Reset game variables
     score = 0;
     level = 1;
-    timeLeft = 30;
     badges = [];
     totalScore = 0;
     updateLevelDisplay();
     updateBadgeDisplay();
+
+    // Ensure the timer does not reset to 30 seconds if "+5 Seconds" was used
+    if (timeLeft <= 0) {
+        timeLeft = 30; // Reset only if the timer has expired
+    }
 
     // Start creating drops every 1000ms (1 second)
     startDropInterval(1000);
@@ -392,63 +396,63 @@ const inventoryItems = []; // Track purchased items
 // Add purchased items to the inventory
 function addToInventory(itemName, duration) {
     const inventoryContainer = document.getElementById('inventory-items');
+    let itemElement = document.querySelector(`.inventory-item[data-item="${itemName}"]`);
 
-    // Create inventory item element
-    const item = document.createElement('div');
-    item.className = 'inventory-item';
+    if (itemElement) {
+        // If the item already exists, increment its quantity
+        const quantityElement = itemElement.querySelector('.quantity');
+        quantityElement.textContent = parseInt(quantityElement.textContent, 10) + 1;
+    } else {
+        // Create a new inventory item element
+        itemElement = document.createElement('div');
+        itemElement.className = 'inventory-item';
+        itemElement.dataset.item = itemName;
 
-    // Add an icon or image based on the item name
-    const icon = document.createElement('i');
-    switch (itemName) {
-        case '+5 Seconds':
-            icon.className = 'fas fa-clock'; // Clock icon
-            break;
-        case 'No Reds for 7s':
-            icon.className = 'fas fa-shield-alt'; // Shield icon
-            break;
-        case 'Double Points for 10s':
-            icon.className = 'fas fa-star'; // Star icon
-            break;
-        case 'Clear All Drops':
-            icon.className = 'fas fa-broom'; // Broom icon
-            break;
-        case 'Slow Drops for 10s':
-            icon.className = 'fas fa-snail'; // Snail icon
-            break;
+        // Add an icon or image based on the item name
+        const icon = document.createElement('i');
+        switch (itemName) {
+            case '+5 Seconds':
+                icon.className = 'fas fa-clock'; // Clock icon
+                break;
+            case 'No Reds for 7s':
+                icon.className = 'fas fa-shield-alt'; // Shield icon
+                break;
+            case 'Double Points for 10s':
+                icon.className = 'fas fa-star'; // Star icon
+                break;
+            case 'Clear All Drops':
+                icon.className = 'fas fa-broom'; // Broom icon
+                break;
+            case 'Slow Drops for 10s':
+                icon.className = 'fas fa-snail'; // Snail icon
+                break;
+        }
+
+        // Add the icon and item name to the inventory item
+        itemElement.appendChild(icon);
+        const label = document.createElement('span');
+        label.textContent = itemName;
+        itemElement.appendChild(label);
+
+        // Add a quantity display
+        const quantity = document.createElement('span');
+        quantity.className = 'quantity';
+        quantity.textContent = '1';
+        itemElement.appendChild(quantity);
+
+        // Add click event to activate the item's effect
+        itemElement.addEventListener('click', () => {
+            activateItemEffect(itemName, duration, itemElement);
+        });
+
+        // Append the item to the inventory
+        inventoryContainer.appendChild(itemElement);
     }
-
-    // Add the icon and item name to the inventory item
-    item.appendChild(icon);
-    const label = document.createElement('span');
-    label.textContent = itemName;
-    item.appendChild(label);
-
-    // Add click event to activate the item's effect
-    item.addEventListener('click', () => {
-        activateItemEffect(itemName, duration, item);
-    });
-
-    // Append the item to the inventory
-    inventoryContainer.appendChild(item);
 }
 
 // Activate the item's effect
 function activateItemEffect(itemName, duration, itemElement) {
     if (itemElement.classList.contains('active')) return; // Prevent reactivation
-
-    // Mark the item as active
-    itemElement.classList.add('active');
-
-    // Create a visual timer for the item's effect
-    const effectTimer = document.createElement('div');
-    effectTimer.className = 'effect-timer';
-    itemElement.appendChild(effectTimer);
-
-    // Set the timer's width to 100% and animate it to 0% over the duration
-    effectTimer.style.width = '100%';
-    setTimeout(() => {
-        effectTimer.style.width = '0%';
-    }, duration * 1000);
 
     // Apply the item's effect
     switch (itemName) {
@@ -470,11 +474,14 @@ function activateItemEffect(itemName, duration, itemElement) {
             break;
     }
 
-    // Remove the effect and item after the duration
-    setTimeout(() => {
-        itemElement.classList.remove('active');
-        effectTimer.remove();
-    }, duration * 1000);
+    // Decrease the quantity or remove the item if quantity reaches 0
+    const quantityElement = itemElement.querySelector('.quantity');
+    const currentQuantity = parseInt(quantityElement.textContent, 10);
+    if (currentQuantity > 1) {
+        quantityElement.textContent = currentQuantity - 1;
+    } else {
+        itemElement.remove();
+    }
 }
 
 // Update the inventory when purchasing items
