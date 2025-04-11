@@ -326,6 +326,37 @@ body {
     background-color: #45a049;
 }
 
+/* Buy Button */
+#buy-btn {
+    margin-top: 20px;
+    padding: 15px 30px; /* Larger padding for a bigger button */
+    background-color: #4CAF50; /* Green */
+    color: white;
+    border: none;
+    border-radius: 8px; /* Rounded corners */
+    font-size: 18px; /* Larger font size */
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#buy-btn:hover {
+    background-color: #45a049; /* Darker green */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+#buy-btn:active {
+    transform: scale(0.95); /* Slightly shrink on click */
+}
+
+/* Total Cost Display */
+#total-cost {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    margin-top: 10px;
+}
+
 /* Close Button */
 .close {
     position: absolute;

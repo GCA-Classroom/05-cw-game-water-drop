@@ -282,3 +282,106 @@ function activateSlowDrops(duration) {
         startDropInterval(originalInterval); // Restore original speed
     }, duration * 1000);
 }
+
+// Update the total cost dynamically
+function updateTotalCost() {
+    const powerUpCosts = {
+        addTime: 50,
+        noReds: 100,
+        doublePoints: 150,
+        clearDrops: 200,
+        slowDrops: 250,
+    };
+
+    // Get quantities for each power-up
+    const quantities = {
+        addTime: parseInt(document.getElementById('addTime-qty').value, 10) || 0,
+        noReds: parseInt(document.getElementById('noReds-qty').value, 10) || 0,
+        doublePoints: parseInt(document.getElementById('doublePoints-qty').value, 10) || 0,
+        clearDrops: parseInt(document.getElementById('clearDrops-qty').value, 10) || 0,
+        slowDrops: parseInt(document.getElementById('slowDrops-qty').value, 10) || 0,
+    };
+
+    // Calculate total cost
+    let totalCost = 0;
+    for (const powerUp in quantities) {
+        totalCost += quantities[powerUp] * powerUpCosts[powerUp];
+    }
+
+    // Update the total cost display
+    document.getElementById('total-cost').textContent = totalCost;
+}
+
+// Handle "Buy" button click
+document.getElementById('buy-btn').addEventListener('click', () => {
+    const powerUpCosts = {
+        addTime: 50,
+        noReds: 100,
+        doublePoints: 150,
+        clearDrops: 200,
+        slowDrops: 250,
+    };
+
+    // Get quantities for each power-up
+    const quantities = {
+        addTime: parseInt(document.getElementById('addTime-qty').value, 10) || 0,
+        noReds: parseInt(document.getElementById('noReds-qty').value, 10) || 0,
+        doublePoints: parseInt(document.getElementById('doublePoints-qty').value, 10) || 0,
+        clearDrops: parseInt(document.getElementById('clearDrops-qty').value, 10) || 0,
+        slowDrops: parseInt(document.getElementById('slowDrops-qty').value, 10) || 0,
+    };
+
+    // Calculate total cost
+    let totalCost = 0;
+    for (const powerUp in quantities) {
+        totalCost += quantities[powerUp] * powerUpCosts[powerUp];
+    }
+
+    // Check if the player has enough score
+    if (score < totalCost) {
+        alert('Not enough score to purchase these power-ups!');
+        return;
+    }
+
+    // Deduct the total cost from the score
+    score -= totalCost;
+    document.getElementById('score').textContent = score;
+    document.getElementById('total-currency').textContent = score; // Update total currency
+
+    // Activate each power-up for the specified quantity
+    for (const powerUp in quantities) {
+        for (let i = 0; i < quantities[powerUp]; i++) {
+            switch (powerUp) {
+                case 'addTime':
+                    timeLeft += 5; // Add 5 seconds to the timer
+                    document.getElementById('time-left').textContent = timeLeft;
+                    break;
+                case 'noReds':
+                    activateNoReds(7); // Disable bad drops for 7 seconds
+                    break;
+                case 'doublePoints':
+                    activateDoublePoints(10); // Double points for 10 seconds
+                    break;
+                case 'clearDrops':
+                    clearAllDrops(); // Remove all drops from the screen
+                    break;
+                case 'slowDrops':
+                    activateSlowDrops(10); // Slow down drops for 10 seconds
+                    break;
+            }
+        }
+    }
+
+    // Reset quantities to 0 after purchase
+    document.getElementById('addTime-qty').value = 0;
+    document.getElementById('noReds-qty').value = 0;
+    document.getElementById('doublePoints-qty').value = 0;
+    document.getElementById('clearDrops-qty').value = 0;
+    document.getElementById('slowDrops-qty').value = 0;
+
+    // Reset total cost display
+    updateTotalCost();
+
+    // Close the store modal
+    storeModal.style.display = 'none';
+});
