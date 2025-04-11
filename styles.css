@@ -414,6 +414,11 @@ body {
     transition: transform 0.2s ease;
 }
 
+.inventory-item i {
+    font-size: 24px; /* Icon size */
+    margin-bottom: 5px;
+}
+
 .inventory-item:hover {
     transform: scale(1.1); /* Slightly enlarge on hover */
     background-color: #FF902A; /* Charity: water orange */

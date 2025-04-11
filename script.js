@@ -396,7 +396,32 @@ function addToInventory(itemName, duration) {
     // Create inventory item element
     const item = document.createElement('div');
     item.className = 'inventory-item';
-    item.textContent = itemName;
+
+    // Add an icon or image based on the item name
+    const icon = document.createElement('i');
+    switch (itemName) {
+        case '+5 Seconds':
+            icon.className = 'fas fa-clock'; // Clock icon
+            break;
+        case 'No Reds for 7s':
+            icon.className = 'fas fa-shield-alt'; // Shield icon
+            break;
+        case 'Double Points for 10s':
+            icon.className = 'fas fa-star'; // Star icon
+            break;
+        case 'Clear All Drops':
+            icon.className = 'fas fa-broom'; // Broom icon
+            break;
+        case 'Slow Drops for 10s':
+            icon.className = 'fas fa-snail'; // Snail icon
+            break;
+    }
+
+    // Add the icon and item name to the inventory item
+    item.appendChild(icon);
+    const label = document.createElement('span');
+    label.textContent = itemName;
+    item.appendChild(label);
 
     // Add click event to activate the item's effect
     item.addEventListener('click', () => {
@@ -405,7 +430,6 @@ function addToInventory(itemName, duration) {
 
     // Append the item to the inventory
     inventoryContainer.appendChild(item);
-    inventoryItems.push({ name: itemName, duration });
 }
 
 // Activate the item's effect

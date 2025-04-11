@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Water Drop Game</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Font Awesome -->
 </head>
 <body>
     <div class="game-wrapper">
@@ -48,23 +49,23 @@
             <p>Total Currency: <span id="total-currency">0</span></p>
             <div class="store-items">
                 <div class="store-item">
-                    <label>+5 Seconds (Cost: 50)</label>
+                    <label><i class="fas fa-plus"></i> +5 Seconds (Cost: 50)</label>
                     <input type="number" id="addTime-qty" min="0" value="0" onchange="updateTotalCost()">
                 </div>
                 <div class="store-item">
-                    <label>No Reds for 7s (Cost: 100)</label>
+                    <label><i class="fas fa-times"></i> No Reds for 7s (Cost: 100)</label>
                     <input type="number" id="noReds-qty" min="0" value="0" onchange="updateTotalCost()">
                 </div>
                 <div class="store-item">
-                    <label>Double Points for 10s (Cost: 150)</label>
+                    <label><i class="fas fa-star"></i> Double Points for 10s (Cost: 150)</label>
                     <input type="number" id="doublePoints-qty" min="0" value="0" onchange="updateTotalCost()">
                 </div>
                 <div class="store-item">
-                    <label>Clear All Drops (Cost: 200)</label>
+                    <label><i class="fas fa-radiation-alt"></i> Clear All Drops (Cost: 200)</label>
                     <input type="number" id="clearDrops-qty" min="0" value="0" onchange="updateTotalCost()">
                 </div>
                 <div class="store-item">
-                    <label>Slow Drops for 10s (Cost: 250)</label>
+                    <label><i class="fas fa-snowflake"></i> Slow Drops for 10s (Cost: 250)</label>
                     <input type="number" id="slowDrops-qty" min="0" value="0" onchange="updateTotalCost()">
                 </div>
             </div>
