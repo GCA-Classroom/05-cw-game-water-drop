@@ -80,18 +80,19 @@ body {
 
 .water-drop {
     position: absolute;
-    width: 40px;  /* increased from 30px */
-    height: 40px; /* increased from 30px */
-    background-color: #0099ff;
-    border-radius: 50% 50% 50% 50%;
+    width: 30px;  /* Adjusted width for teardrop shape */
+    height: 50px; /* Adjusted height for teardrop shape */
+    background: radial-gradient(circle at 50% 20%, #0099ff, #0066cc); /* Gradient for depth */
+    border-radius: 50% 50% 70% 70%; /* Adjusted for teardrop shape */
     animation: dropFall linear forwards;
     transform-origin: center;
+    transform: skewY(-10deg); /* Slight skew for a falling effect */
     cursor: pointer;
     pointer-events: auto;
 }
 
 .bad-drop {
-    background-color: #ff4444;
+    background: radial-gradient(circle at 50% 20%, #ff4444, #cc0000); /* Gradient for depth */
 }
 
 .game-title {
