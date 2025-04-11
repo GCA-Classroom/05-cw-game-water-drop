@@ -25,7 +25,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #f0f0f0;
+    background-color: #FFFFFF; /* Changed from #f0f0f0 to white */
     font-family: Arial, sans-serif;
 }
 
@@ -103,10 +103,10 @@ body {
 }
 
 .game-title {
-    color: #131313;
+    color: #2E9DF7; /* Changed to Charity: water blue */
     font-size: 48px;
     margin-top: 0;
-    margin-bottom: 5px;  /* reduced from 20px */
+    margin-bottom: 5px; /* Reduced from 20px */
     text-align: center;
 }
 
@@ -479,4 +479,16 @@ body {
     .badge-container {
         width: 95vw;
     }
+}
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; /* Add spacing above the logo */
+    margin-bottom: 10px; /* Add spacing below the logo */
+}
+
+.cw-logo {
+    max-width: 250px; /* Adjust size as needed */
+    height: auto; /* Maintain aspect ratio */
 }
