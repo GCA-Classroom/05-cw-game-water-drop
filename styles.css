@@ -372,6 +372,65 @@ body {
     color: #FF4444;
 }
 
+/* Inventory Container */
+.inventory-container {
+    width: 800px; /* Match the width of the game container */
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.inventory-container h3 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.inventory-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.inventory-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 100px;
+    background-color: #FFC907; /* Charity: water yellow */
+    color: #333;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    position: relative;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease;
+}
+
+.inventory-item:hover {
+    transform: scale(1.1); /* Slightly enlarge on hover */
+    background-color: #FF902A; /* Charity: water orange */
+    color: white;
+}
+
+.inventory-item .effect-timer {
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    right: 5px;
+    height: 5px;
+    background-color: #4CAF50; /* Green for active effect */
+    border-radius: 3px;
+    transition: width linear;
+}
+
 /* Adjustments for smaller screens */
 @media (max-width: 850px) {
     .game-wrapper, .score-panel, #game-container {

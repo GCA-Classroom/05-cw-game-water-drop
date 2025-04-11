@@ -385,3 +385,134 @@ document.getElementById('buy-btn').addEventListener('click', () => {
     // Close the store modal
     storeModal.style.display = 'none';
 });
+
+// Inventory system
+const inventoryItems = []; // Track purchased items
+
+// Add purchased items to the inventory
+function addToInventory(itemName, duration) {
+    const inventoryContainer = document.getElementById('inventory-items');
+
+    // Create inventory item element
+    const item = document.createElement('div');
+    item.className = 'inventory-item';
+    item.textContent = itemName;
+
+    // Add click event to activate the item's effect
+    item.addEventListener('click', () => {
+        activateItemEffect(itemName, duration, item);
+    });
+
+    // Append the item to the inventory
+    inventoryContainer.appendChild(item);
+    inventoryItems.push({ name: itemName, duration });
+}
+
+// Activate the item's effect
+function activateItemEffect(itemName, duration, itemElement) {
+    if (itemElement.classList.contains('active')) return; // Prevent reactivation
+
+    // Mark the item as active
+    itemElement.classList.add('active');
+
+    // Create a visual timer for the item's effect
+    const effectTimer = document.createElement('div');
+    effectTimer.className = 'effect-timer';
+    itemElement.appendChild(effectTimer);
+
+    // Set the timer's width to 100% and animate it to 0% over the duration
+    effectTimer.style.width = '100%';
+    setTimeout(() => {
+        effectTimer.style.width = '0%';
+    }, duration * 1000);
+
+    // Apply the item's effect
+    switch (itemName) {
+        case '+5 Seconds':
+            timeLeft += 5; // Add 5 seconds to the timer
+            document.getElementById('time-left').textContent = timeLeft;
+            break;
+        case 'No Reds for 7s':
+            activateNoReds(duration); // Disable bad drops for the duration
+            break;
+        case 'Double Points for 10s':
+            activateDoublePoints(duration); // Double points for the duration
+            break;
+        case 'Clear All Drops':
+            clearAllDrops(); // Clear all drops immediately
+            break;
+        case 'Slow Drops for 10s':
+            activateSlowDrops(duration); // Slow down drops for the duration
+            break;
+    }
+
+    // Remove the effect and item after the duration
+    setTimeout(() => {
+        itemElement.classList.remove('active');
+        effectTimer.remove();
+    }, duration * 1000);
+}
+
+// Update the inventory when purchasing items
+document.getElementById('buy-btn').addEventListener('click', () => {
+    const powerUpCosts = {
+        addTime: 50,
+        noReds: 100,
+        doublePoints: 150,
+        clearDrops: 200,
+        slowDrops: 250,
+    };
+
+    const quantities = {
+        addTime: parseInt(document.getElementById('addTime-qty').value, 10) || 0,
+        noReds: parseInt(document.getElementById('noReds-qty').value, 10) || 0,
+        doublePoints: parseInt(document.getElementById('doublePoints-qty').value, 10) || 0,
+        clearDrops: parseInt(document.getElementById('clearDrops-qty').value, 10) || 0,
+        slowDrops: parseInt(document.getElementById('slowDrops-qty').value, 10) || 0,
+    };
+
+    let totalCost = 0;
+    for (const powerUp in quantities) {
+        totalCost += quantities[powerUp] * powerUpCosts[powerUp];
+    }
+
+    if (score < totalCost) {
+        alert('Not enough score to purchase these power-ups!');
+        return;
+    }
+
+    score -= totalCost;
+    document.getElementById('score').textContent = score;
+    document.getElementById('total-currency').textContent = score;
+
+    for (const powerUp in quantities) {
+        for (let i = 0; i < quantities[powerUp]; i++) {
+            switch (powerUp) {
+                case 'addTime':
+                    addToInventory('+5 Seconds', 0); // Add to inventory
+                    break;
+                case 'noReds':
+                    addToInventory('No Reds for 7s', 7); // Add to inventory
+                    break;
+                case 'doublePoints':
+                    addToInventory('Double Points for 10s', 10); // Add to inventory
+                    break;
+                case 'clearDrops':
+                    addToInventory('Clear All Drops', 0); // Add to inventory
+                    break;
+                case 'slowDrops':
+                    addToInventory('Slow Drops for 10s', 10); // Add to inventory
+                    break;
+            }
+        }
+    }
+
+    document.getElementById('addTime-qty').value = 0;
+    document.getElementById('noReds-qty').value = 0;
+    document.getElementById('doublePoints-qty').value = 0;
+    document.getElementById('clearDrops-qty').value = 0;
+    document.getElementById('slowDrops-qty').value = 0;
+
+    updateTotalCost();
+    storeModal.style.display = 'none';
+});
