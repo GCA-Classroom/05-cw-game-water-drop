@@ -335,58 +335,49 @@ document.getElementById('buy-btn').addEventListener('click', () => {
         slowDrops: parseInt(document.getElementById('slowDrops-qty').value, 10) || 0,
     };
 
-    // Calculate total cost
     let totalCost = 0;
     for (const powerUp in quantities) {
         totalCost += quantities[powerUp] * powerUpCosts[powerUp];
     }
 
-    // Check if the player has enough score
     if (score < totalCost) {
         alert('Not enough score to purchase these power-ups!');
         return;
     }
 
-    // Deduct the total cost from the score
     score -= totalCost;
     document.getElementById('score').textContent = score;
-    document.getElementById('total-currency').textContent = score; // Update total currency
+    document.getElementById('total-currency').textContent = score;
 
-    // Activate each power-up for the specified quantity
     for (const powerUp in quantities) {
         for (let i = 0; i < quantities[powerUp]; i++) {
             switch (powerUp) {
                 case 'addTime':
-                    timeLeft += 5; // Add 5 seconds to the timer
-                    document.getElementById('time-left').textContent = timeLeft;
+                    addToInventory('+5 Seconds', 0); // Add to inventory
                     break;
                 case 'noReds':
-                    activateNoReds(7); // Disable bad drops for 7 seconds
+                    addToInventory('No Reds for 7s', 7); // Add to inventory
                     break;
                 case 'doublePoints':
-                    activateDoublePoints(10); // Double points for 10 seconds
+                    addToInventory('Double Points for 10s', 10); // Add to inventory
                     break;
                 case 'clearDrops':
-                    clearAllDrops(); // Remove all drops from the screen
+                    addToInventory('Clear All Drops', 0); // Add to inventory
                     break;
                 case 'slowDrops':
-                    activateSlowDrops(10); // Slow down drops for 10 seconds
+                    addToInventory('Slow Drops for 10s', 10); // Add to inventory
                     break;
             }
         }
     }
 
-    // Reset quantities to 0 after purchase
     document.getElementById('addTime-qty').value = 0;
     document.getElementById('noReds-qty').value = 0;
     document.getElementById('doublePoints-qty').value = 0;
     document.getElementById('clearDrops-qty').value = 0;
     document.getElementById('slowDrops-qty').value = 0;
 
-    // Reset total cost display
     updateTotalCost();
-
-    // Close the store modal
     storeModal.style.display = 'none';
 });
 
