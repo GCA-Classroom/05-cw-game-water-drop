@@ -2,6 +2,8 @@
 let gameActive = false;  // Tracks if game is currently running
 let gameInterval;        // Stores the interval that creates drops
 let score = 0; // Initialize score
+let timerInterval; // Stores the interval for the countdown timer
+let timeLeft = 30; // Initialize timer to 30 seconds
 
 // Event listener for the start button
 document.getElementById('start-btn').addEventListener('click', startGame);
@@ -17,10 +19,37 @@ function startGame() {
     
     // Start creating drops every 1000ms (1 second)
     gameInterval = setInterval(createDrop, 1000);
+
+    timeLeft = 30; // Reset timer
+    document.getElementById('time-left').textContent = timeLeft;
+
+    // Start countdown timer
+    timerInterval = setInterval(updateTimer, 1000);
+}
+
+function updateTimer() {
+    timeLeft--;
+    document.getElementById('time-left').textContent = timeLeft;
+
+    if (timeLeft <= 0) {
+        endGame(); // End the game when the timer reaches 0
+    }
+}
+
+function endGame() {
+    gameActive = false; // Stop the game
+    clearInterval(gameInterval); // Stop creating drops
+    clearInterval(timerInterval); // Stop the timer
+    document.getElementById('start-btn').disabled = false; // Re-enable start button
+
+    // Remove all remaining drops
+    const drops = document.querySelectorAll('.water-drop');
+    drops.forEach(drop => drop.remove());
 }
 
 // Function to update the score and display feedback
 function updateScore(isBadDrop) {
+    if (!gameActive) return; // Prevent score updates after the game ends
     const feedbackMessage = document.getElementById('feedback-message');
     
     if (isBadDrop) {
