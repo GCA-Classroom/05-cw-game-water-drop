@@ -23,6 +23,10 @@ function startGame() {
     timeLeft = 30; // Reset timer
     document.getElementById('time-left').textContent = timeLeft;
 
+    // Reset timer bar to full width
+    const timerBar = document.querySelector('.timer-bar');
+    timerBar.style.width = '100%';
+
     // Start countdown timer
     timerInterval = setInterval(updateTimer, 1000);
 }
@@ -30,6 +34,11 @@ function startGame() {
 function updateTimer() {
     timeLeft--;
     document.getElementById('time-left').textContent = timeLeft;
+
+    // Update timer bar width
+    const timerBar = document.querySelector('.timer-bar');
+    const percentage = (timeLeft / 30) * 100; // Calculate remaining percentage
+    timerBar.style.width = `${percentage}%`;
 
     if (timeLeft <= 0) {
         endGame(); // End the game when the timer reaches 0
