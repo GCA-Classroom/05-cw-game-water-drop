@@ -25,6 +25,13 @@ closeStore.addEventListener('click', () => {
     storeModal.style.display = 'none'; // Hide the modal
 });
 
+// Close the store modal when clicking outside the modal content
+storeModal.addEventListener('click', (event) => {
+    if (event.target === storeModal) {
+        storeModal.style.display = 'none'; // Hide the modal
+    }
+});
+
 // Game initialization function
 function startGame() {
     if (gameActive) return; // Prevent multiple game instances
