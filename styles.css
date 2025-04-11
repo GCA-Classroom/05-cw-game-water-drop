@@ -159,6 +159,57 @@ body {
     }
 }
 
+/* Level Display */
+.level {
+    font-size: 24px;
+    font-weight: bold;
+    color: #2E9DF7; /* Charity: water blue */
+    margin-left: 20px; /* Space between score and level */
+}
+
+/* Badge Container */
+.badge-container {
+    width: 800px; /* Match the width of the game container */
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.badge-container h3 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+#badge-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+#badge-list span {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #FFC907; /* Charity: water yellow */
+    color: #333;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Badge hover effect */
+#badge-list span:hover {
+    background-color: #FF902A; /* Charity: water orange */
+    color: #fff;
+    cursor: pointer;
+}
+
+/* Adjustments for smaller screens */
 @media (max-width: 850px) {
     .game-wrapper, .score-panel, #game-container {
         width: 95vw;
@@ -166,5 +217,9 @@ body {
     
     #game-container {
         height: 70vh;
+    }
+
+    .badge-container {
+        width: 95vw;
     }
 }

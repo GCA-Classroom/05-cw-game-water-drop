@@ -12,6 +12,7 @@
         <p class="game-tagline">Catch the good drops, avoid the bad ones!</p>
         <div class="score-panel">
             <div class="score">Score: <span id="score">0</span></div>
+            <div class="level">Level: <span id="level-display">1</span></div> <!-- Added level display -->
             <button id="start-btn">Start Game</button>
         </div>
         
@@ -21,10 +22,15 @@
             <div class="timer-bar"></div>
         </div>
 
-        <div id="feedback-message"></div> <!-- Added feedback message area -->
+        <div id="feedback-message"></div> <!-- Feedback message area -->
 
         <div id="game-container">
             <div id="message-display"></div>
+        </div>
+
+        <div id="badge-container" class="badge-container">
+            <h3>Badges:</h3>
+            <div id="badge-list"></div> <!-- Dynamic badge list -->
         </div>
     </div>
     
