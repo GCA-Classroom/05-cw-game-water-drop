@@ -130,7 +130,11 @@ function checkLevelUp() {
     if (score >= levelUpScore) {
         level++;
         updateLevelDisplay();
-        badges.push(`Level ${level} Achieved!`); // Store badge for later display
+        const badgeName = `Level ${level} Achieved!`;
+        if (!badges.includes(badgeName)) {
+            badges.push(badgeName); // Add the badge to the array
+        }
+        updateBadgeDisplay(); // Update the badge display
         startDropInterval(Math.max(500, 1000 - level * 100)); // Increase drop speed
     }
 }
@@ -151,15 +155,14 @@ function awardBadge(badgeName) {
 }
 
 function updateBadgeDisplay() {
-    const badgeContainer = document.getElementById('badge-container');
-    if (!badgeContainer) {
-        const newBadgeContainer = document.createElement('div');
-        newBadgeContainer.id = 'badge-container';
-        newBadgeContainer.innerHTML = `<h3>Badges:</h3>`;
-        document.querySelector('.game-wrapper').appendChild(newBadgeContainer);
-    }
-    const badgeList = badges.map(badge => `<span>${badge}</span>`).join(', ');
-    document.getElementById('badge-container').innerHTML = `<h3>Badges:</h3> ${badgeList}`;
+    const badgeContainer = document.getElementById('badge-list'); // Use the correct badge list container
+    if (!badgeContainer) return; // Ensure the badge container exists
+
+    // Clear the badge container and repopulate it with the current badges
+    badgeContainer.innerHTML = badges
+        .map(badge => `<span>${badge}</span>`)
+        .join('');
+    console.log('Badges:', badges);
 }
 
 function createDrop() {
