@@ -436,6 +436,20 @@ body {
     transition: width linear;
 }
 
+.store-item i {
+    display: inline-block;
+    width: 30px; /* Set a fixed width for the box */
+    height: 30px; /* Set a fixed height for the box */
+    line-height: 30px; /* Center the icon vertically */
+    text-align: center; /* Center the icon horizontally */
+    border: 2px solid #333; /* Add a border around the icon */
+    border-radius: 5px; /* Add rounded corners */
+    margin-right: 10px; /* Add spacing between the icon and the text */
+    background-color: #f9f9f9; /* Light background color for the box */
+    color: #333; /* Icon color */
+    font-size: 18px; /* Adjust icon size */
+}
+
 /* Adjustments for smaller screens */
 @media (max-width: 850px) {
     .game-wrapper, .score-panel, #game-container {
