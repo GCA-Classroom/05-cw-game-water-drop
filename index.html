@@ -12,8 +12,9 @@
         <p class="game-tagline">Catch the good drops, avoid the bad ones!</p>
         <div class="score-panel">
             <div class="score">Score: <span id="score">0</span></div>
-            <div class="level">Level: <span id="level-display">1</span></div> <!-- Added level display -->
+            <div class="level">Level: <span id="level-display">1</span></div>
             <button id="start-btn">Start Game</button>
+            <button id="store-btn">Store</button> <!-- Store button -->
         </div>
         
         <div id="timer">Time Left: <span id="time-left">30</span>s</div> <!-- Timer display -->
@@ -31,6 +32,42 @@
         <div id="badge-container" class="badge-container">
             <h3>Badges:</h3>
             <div id="badge-list"></div> <!-- Dynamic badge list -->
+        </div>
+    </div>
+
+    <!-- Store Popup Modal -->
+    <div id="store-modal" class="store-modal">
+        <div class="store-modal-content">
+            <span id="close-store" class="close">&times;</span>
+            <h3>Store</h3>
+            <p>Total Currency: <span id="total-currency">0</span></p>
+            <div class="store-items">
+                <div class="store-item">
+                    <label>+5 Seconds (Cost: 50)</label>
+                    <input type="number" id="addTime-qty" min="1" value="1">
+                    <button onclick="purchasePowerUp('addTime')">Buy</button>
+                </div>
+                <div class="store-item">
+                    <label>No Reds for 7s (Cost: 100)</label>
+                    <input type="number" id="noReds-qty" min="1" value="1">
+                    <button onclick="purchasePowerUp('noReds')">Buy</button>
+                </div>
+                <div class="store-item">
+                    <label>Double Points for 10s (Cost: 150)</label>
+                    <input type="number" id="doublePoints-qty" min="1" value="1">
+                    <button onclick="purchasePowerUp('doublePoints')">Buy</button>
+                </div>
+                <div class="store-item">
+                    <label>Clear All Drops (Cost: 200)</label>
+                    <input type="number" id="clearDrops-qty" min="1" value="1">
+                    <button onclick="purchasePowerUp('clearDrops')">Buy</button>
+                </div>
+                <div class="store-item">
+                    <label>Slow Drops for 10s (Cost: 250)</label>
+                    <input type="number" id="slowDrops-qty" min="1" value="1">
+                    <button onclick="purchasePowerUp('slowDrops')">Buy</button>
+                </div>
+            </div>
         </div>
     </div>
     

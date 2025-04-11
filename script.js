@@ -6,9 +6,24 @@ let timerInterval;       // Stores the interval for the countdown timer
 let timeLeft = 30;       // Initialize timer to 30 seconds
 let level = 1;           // Initialize level
 let badges = [];         // Track earned badges
+let totalScore = 0;      // Track total score for level progression
 
 // Event listener for the start button
 document.getElementById('start-btn').addEventListener('click', startGame);
+
+// Open and close the store modal
+const storeBtn = document.getElementById('store-btn');
+const storeModal = document.getElementById('store-modal');
+const closeStore = document.getElementById('close-store');
+
+storeBtn.addEventListener('click', () => {
+    document.getElementById('total-currency').textContent = score; // Update total currency
+    storeModal.style.display = 'flex'; // Show the modal
+});
+
+closeStore.addEventListener('click', () => {
+    storeModal.style.display = 'none'; // Hide the modal
+});
 
 // Game initialization function
 function startGame() {
@@ -23,6 +38,7 @@ function startGame() {
     level = 1;
     timeLeft = 30;
     badges = [];
+    totalScore = 0;
     updateLevelDisplay();
     updateBadgeDisplay();
 
@@ -82,6 +98,7 @@ function updateScore(isBadDrop) {
         feedbackMessage.style.color = '#F5402C'; // Red for bad drops
     } else {
         score += 10; // Add points for good drops
+        totalScore += 10; // Track total score for level progression
         feedbackMessage.textContent = '😊 Good Drop! +10';
         feedbackMessage.style.color = '#4FCB53'; // Green for good drops
     }
@@ -167,4 +184,94 @@ function createDrop() {
     drop.addEventListener('animationend', () => {
         drop.remove();
     });
+}
+
+// Purchase power-ups with quantities
+function purchasePowerUp(powerUp) {
+    if (!gameActive) return; // Prevent purchases when the game is not active
+
+    const powerUpCosts = {
+        addTime: 50,
+        noReds: 100,
+        doublePoints: 150,
+        clearDrops: 200,
+        slowDrops: 250,
+    };
+
+    const quantity = parseInt(document.getElementById(`${powerUp}-qty`).value, 10);
+    const totalCost = powerUpCosts[powerUp] * quantity;
+
+    if (score < totalCost) {
+        alert('Not enough score to purchase this power-up!');
+        return;
+    }
+
+    // Deduct the cost from the score
+    score -= totalCost;
+    document.getElementById('score').textContent = score;
+    document.getElementById('total-currency').textContent = score; // Update total currency
+
+    // Activate the power-up for the specified quantity
+    for (let i = 0; i < quantity; i++) {
+        switch (powerUp) {
+            case 'addTime':
+                timeLeft += 5; // Add 5 seconds to the timer
+                document.getElementById('time-left').textContent = timeLeft;
+                break;
+            case 'noReds':
+                activateNoReds(7); // Disable bad drops for 7 seconds
+                break;
+            case 'doublePoints':
+                activateDoublePoints(10); // Double points for 10 seconds
+                break;
+            case 'clearDrops':
+                clearAllDrops(); // Remove all drops from the screen
+                break;
+            case 'slowDrops':
+                activateSlowDrops(10); // Slow down drops for 10 seconds
+                break;
+        }
+    }
+}
+
+function activateNoReds(duration) {
+    const originalCreateDrop = createDrop;
+    createDrop = function () {
+        const drop = document.createElement('div');
+        drop.className = 'water-drop'; // Only good drops
+        // ...existing code for creating drops...
+    };
+    setTimeout(() => {
+        createDrop = originalCreateDrop; // Restore original behavior
+    }, duration * 1000);
+}
+
+function activateDoublePoints(duration) {
+    const originalUpdateScore = updateScore;
+    updateScore = function (isBadDrop) {
+        if (!gameActive) return;
+        if (!isBadDrop) {
+            score += 20; // Double points for good drops
+            totalScore += 20; // Track total score
+        } else {
+            score -= 5; // Deduct points for bad drops
+        }
+        document.getElementById('score').textContent = score;
+    };
+    setTimeout(() => {
+        updateScore = originalUpdateScore; // Restore original behavior
+    }, duration * 1000);
+}
+
+function clearAllDrops() {
+    const drops = document.querySelectorAll('.water-drop');
+    drops.forEach(drop => drop.remove());
+}
+
+function activateSlowDrops(duration) {
+    const originalInterval = gameInterval;
+    startDropInterval(2000); // Slow down drops
+    setTimeout(() => {
+        startDropInterval(originalInterval); // Restore original speed
+    }, duration * 1000);
 }
