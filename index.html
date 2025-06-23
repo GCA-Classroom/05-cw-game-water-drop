@@ -9,10 +9,18 @@
 <body>
     <div class="game-wrapper">
         <div id="title-screen">
+            <img src="img/cw_logo.png" alt="charity: water logo" style="width:180px;display:block;margin:0 auto 18px;">
             <h1 class="game-title">Water Drop</h1>
-            <p class="game-tagline">Catch the good drops, avoid the bad ones!</p>
-            <div class="high-score">High Score: <span id="high-score">0</span></div>
+            <p class="game-tagline">Do not miss the rain drops, avoid the logo!</p>
+            <div id="difficulty-select" style="text-align:center; margin-bottom: 16px;">
+                <button class="difficulty-btn" data-diff="easy">Easy</button>
+                <button class="difficulty-btn" data-diff="medium">Normal</button>
+                <button class="difficulty-btn" data-diff="hard">Hard</button>
+            </div>
             <button id="start-btn">Start Game</button>
+            <a href="https://www.charitywater.org/" target="_blank" class="charity-link">
+                Donate to charity: water here today!
+            </a>
         </div>
         <div id="game-ui" style="display:none;">
             <div class="score-panel">

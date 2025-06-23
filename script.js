@@ -21,6 +21,42 @@ const finalScoreDisplay = document.getElementById("final-score");
 const finalHighScoreDisplay = document.getElementById("final-high-score");
 const playAgainBtn = document.getElementById("play-again-btn");
 
+// Add these variables near the top of your script
+let difficulty = 'medium';
+let dropInterval = 400; // Medium default
+let gameDuration = 30;
+let badDropChance = 0.25;
+
+// Get difficulty buttons
+const difficultyBtns = document.querySelectorAll(".difficulty-btn");
+
+// Difficulty selection logic
+difficultyBtns.forEach(btn => {
+  btn.addEventListener("click", () => {
+    difficulty = btn.dataset.diff;
+    if (difficulty === "easy") {
+      dropInterval = 600;      // Slower drops for easy
+      gameDuration = 30;       // Always 30 seconds
+      badDropChance = 0.15;
+    } else if (difficulty === "medium") {
+      dropInterval = 400;      // Medium = your current pace
+      gameDuration = 30;       // Always 30 seconds
+      badDropChance = 0.25;
+    } else if (difficulty === "hard") {
+      dropInterval = 220;      // Faster drops for hard
+      gameDuration = 30;       // Always 30 seconds
+      badDropChance = 0.35;
+    }
+    // Optional: highlight selected button
+    difficultyBtns.forEach(b => b.classList.remove("selected"));
+    btn.classList.add("selected");
+  });
+});
+// Set default difficulty visually
+difficultyBtns.forEach(btn => {
+  if (btn.dataset.diff === difficulty) btn.classList.add("selected");
+});
+
 // Show high score on title screen and in-game
 function updateHighScore() {
   if (score > highScore) highScore = score;
@@ -51,14 +87,13 @@ function startGame() {
   gameRunning = true;
   score = 0;
   misses = 0;
-  timeLeft = 30;
+  timeLeft = gameDuration;
   updateScore(0);
   updateTime();
   showScreen(gameUI);
   clearDrops();
 
-  // Increase drop quantity: create a drop every 400ms
-  dropMaker = setInterval(createDrop, 400);
+  dropMaker = setInterval(createDrop, dropInterval);
   timerInterval = setInterval(() => {
     timeLeft--;
     updateTime();
@@ -117,7 +152,7 @@ function createDrop() {
 
   const drop = document.createElement("div");
   // 25% chance to be a polluted drop
-  const isBad = Math.random() < 0.25;
+  const isBad = Math.random() < badDropChance;
   drop.className = "water-drop" + (isBad ? " bad-drop" : "");
 
   // Drop size
@@ -195,7 +230,7 @@ if (playAgainBtn) {
 const style = document.createElement('style');
 style.textContent = `
 body, html {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Times New Roman', Times, serif;
 }
 `;
 document.head.appendChild(style);
