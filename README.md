@@ -24,7 +24,8 @@ Here’s what you're required to implement to bring the game to life:
   - +1 point for each drop clicked  
 
 - **Add a 30-second timer**
-  - When the timer reaches 0, the game ends  
+  - Implement a countdown timer that starts at 30 seconds when the game begins
+  - When the timer reaches 0, the game ends automatically
 
 - **Display a message when the game ends**
   - If the player scores **20 or more points**, show a **winning** message  
