@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>Water Drop Game</title>
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -10,15 +13,42 @@
     <div class="game-wrapper">
         <h1 class="game-title">Water Drop</h1>
         <p class="game-tagline">Catch the good drops, avoid the bad ones!</p>
+        
+        <div class="difficulty-panel">
+            <label for="difficulty">Difficulty:</label>
+            <select id="difficulty">
+                <option value="easy">Easy (40s/100pts)</option>
+                <option value="normal" selected>Normal (35s/150pts)</option>
+                <option value="hard">Hard (30s/200pts)</option>
+            </select>
+        </div>
+        
         <div class="score-panel">
             <div class="score">Score: <span id="score">0</span></div>
             <div class="timer">Time: <span id="time">30</span>s</div>
-            <button id="start-btn">Start Game</button>
+            <div class="button-group">
+                <button id="start-btn">Start Game</button>
+                <button id="reset-btn">Reset</button>
+            </div>
         </div>
         
         <div id="game-container">
+            <div id="water-can" class="water-can">
+                <img src="img/water-can-transparent.png" alt="Water Can">
+            </div>
         </div>
     </div>
+    
+    <footer class="charity-footer">
+        <div class="footer-content">
+            <img src="img/cw_logo-horizontal.png" alt="charity: water" class="footer-logo">
+            <p>Help bring clean water to people in need around the world.</p>
+            <div class="donation-links">
+                <a href="https://www.charitywater.org/donate" target="_blank" class="donate-btn">Donate Now</a>
+                <a href="https://www.charitywater.org/" target="_blank" class="learn-more-btn">Learn More</a>
+            </div>
+        </div>
+    </footer>
     
     <script src="script.js"></script>
 </body>
