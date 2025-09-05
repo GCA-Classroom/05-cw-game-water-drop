@@ -40,6 +40,10 @@ body {
     gap: 20px;
 }
 
+.green-drop {
+    background-color: #4FCB53;
+}
+
 .score-panel {
     display: flex;
     justify-content: space-between;  /* Space between score and button */
