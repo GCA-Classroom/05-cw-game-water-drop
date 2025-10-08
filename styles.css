@@ -42,13 +42,28 @@ body {
 
 .score-panel {
     display: flex;
-    justify-content: space-between;  /* Space between score and button */
+    justify-content: space-between;
     align-items: center;
     width: 800px;
-    padding: 10px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 16px 32px;
+    background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+    border-radius: 22px;
+    box-shadow: 0 4px 16px #2e9df71a;
+    border: 2px solid #8bb9d1;
+    margin-bottom: 18px;
+    font-size: 1.1em;
+    color: #2E9DF7;
+    font-weight: bold;
+    transition: box-shadow 0.2s;
+}
+
+.score-panel .score,
+.score-panel .timer,
+.score-panel .high-score {
+    background: none;
+    color: #2E9DF7;
+    font-size: 1.1em;
+    font-weight: bold;
 }
 
 .timer {
@@ -69,17 +84,31 @@ body {
 
 
 #start-btn {
-    padding: 8px 16px;
-    background-color: #4CAF50;
-    color: white;
+    font-family: inherit;
+    font-size: 1.1em;
+    padding: 10px 32px;
+    margin-top: 18px;
     border: none;
-    border-radius: 4px;
+    border-radius: 22px;
+    background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+    color: #2E9DF7;
+    font-weight: bold;
+    box-shadow: 0 2px 8px #2e9df71a;
     cursor: pointer;
-    font-size: 16px;
+    transition:
+        background 0.2s,
+        color 0.2s,
+        box-shadow 0.2s,
+        transform 0.1s;
 }
 
-#start-btn:hover {
-    background-color: #45a049;
+#start-btn:hover,
+#start-btn:focus {
+    background: linear-gradient(135deg, #2E9DF7 0%, #8BD1CB 100%);
+    color: #fff;
+    box-shadow: 0 4px 16px #2e9df733;
+    outline: none;
+    transform: scale(1.07);
 }
 
 .score {
@@ -88,31 +117,44 @@ body {
     font-weight: bold;
 }
 
+/* Enhanced clean water droplet */
 .water-drop {
     position: absolute;
-    width: 60px;  /* increased from 40px */
-    height: 60px; /* increased from 40px */
-    background-color: #0099ff;
-    border-radius: 50%;
+    width: 56px;
+    height: 70px;
+    background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" fill="%232E9DF7" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C12 0 4 9 4 14a8 8 0 1 0 16 0c0-5-8-14-8-14z"/></svg>') center/contain no-repeat;
+    border-radius: 50% 50% 60% 60% / 60% 60% 100% 100%;
+    box-shadow: 0 6px 18px 0 #2e9df766, 0 1px 0 #fff inset;
     animation: dropFall linear forwards;
     transform-origin: center;
     cursor: pointer;
-    padding: 15px;  /* Add padding for larger click area */
-    margin: -15px;  /* Offset padding to maintain visual size */
-    transition: transform 0.1s ease;  /* Smooth hover effect */
+    transition: transform 0.1s ease;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: 2px solid #8BD1CB;
 }
 
-.water-drop:hover {
-    transform: scale(1.1);  /* Slight grow effect on hover */
-}
 
 .bad-drop {
-    background-color: #ff4444;
+    position: absolute;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: url('img/water-can-transparent.png') center/contain no-repeat;
+    background-color: transparent;
+    animation: dropFall linear forwards;
+    transform-origin: center;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .game-title {
     color: #131313;
-    font-size: 48px;
+    font-size: 35px;
     margin-top: 0;
     margin-bottom: 5px;  /* reduced from 20px */
     text-align: center;
@@ -132,6 +174,103 @@ body {
     to {
         transform: translateY(600px);
     }
+}
+
+.splash {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0.7;
+    animation: splash-pop 0.3s linear forwards;
+    z-index: 10;
+}
+@keyframes splash-pop {
+    from { transform: scale(0.5); opacity: 0.7; }
+    to   { transform: scale(2.5); opacity: 0; }
+}
+
+.difficulty-btn {
+    font-family: inherit;
+    font-size: 1.1em;
+    padding: 10px 28px;
+    margin: 0 8px;
+    border: none;
+    border-radius: 22px;
+    background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+    color: #2E9DF7;
+    font-weight: bold;
+    box-shadow: 0 2px 8px #2e9df71a;
+    cursor: pointer;
+    transition: 
+        background 0.2s,
+        color 0.2s,
+        box-shadow 0.2s,
+        transform 0.1s;
+}
+
+.difficulty-btn.selected,
+.difficulty-btn:focus,
+.difficulty-btn:hover {
+    background: linear-gradient(135deg, #2E9DF7 0%, #8BD1CB 100%);
+    color: #fff;
+    box-shadow: 0 4px 16px #2e9df733;
+    outline: none;
+    transform: scale(1.07);
+}
+
+#play-again-btn {
+    font-family: inherit;
+    font-size: 1.1em;
+    padding: 10px 32px;
+    margin-top: 18px;
+    border: none;
+    border-radius: 22px;
+    background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+    color: #2E9DF7;
+    font-weight: bold;
+    box-shadow: 0 2px 8px #2e9df71a;
+    cursor: pointer;
+    transition:
+        background 0.2s,
+        color 0.2s,
+        box-shadow 0.2s,
+        transform 0.1s;
+}
+
+#play-again-btn:hover,
+#play-again-btn:focus {
+    background: linear-gradient(135deg, #2E9DF7 0%, #8BD1CB 100%);
+    color: #fff;
+    box-shadow: 0 4px 16px #2e9df733;
+    outline: none;
+    transform: scale(1.07);
+}
+
+.charity-link {
+    display: block;
+    margin: 18px auto 0 auto;
+    padding: 10px 32px;
+    border-radius: 22px;
+    background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+    color: #2E9DF7;
+    font-weight: bold;
+    font-size: 1.05em;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 0 2px 8px #2e9df71a;
+    transition:
+        background 0.2s,
+        color 0.2s,
+        box-shadow 0.2s,
+        transform 0.1s;
+}
+.charity-link:hover,
+.charity-link:focus {
+    background: linear-gradient(135deg, #2E9DF7 0%, #8BD1CB 100%);
+    color: #fff;
+    box-shadow: 0 4px 16px #2e9df733;
+    outline: none;
+    transform: scale(1.07);
 }
 
 @media (max-width: 850px) {
