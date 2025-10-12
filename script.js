@@ -61,7 +61,7 @@ function endGame() {
   // Show message and confetti if winner
   const msgDiv = document.getElementById("game-message");
   msgDiv.style.display = "block";
-  if (score > 20) {
+  if (score > 19) {
     msgDiv.textContent = "🎉 Winner! You scored " + score + "!";
     showConfetti();
   } else {
