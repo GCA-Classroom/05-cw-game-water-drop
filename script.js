@@ -16,30 +16,32 @@ function startGame() {
 }
 
 function createDrop() {
-  // Create a new div element that will be our water drop
   const drop = document.createElement("div");
   drop.className = "water-drop";
 
-  // Make drops different sizes for visual variety
-  const initialSize = 60;
-  const sizeMultiplier = Math.random() * 0.8 + 0.5;
-  const size = initialSize * sizeMultiplier;
-  drop.style.width = drop.style.height = `${size}px`;
+  // 40% chance to make the drop green
+  if (Math.random() < 0.4) {
+    drop.classList.add("green-drop");
+    drop.dataset.type = "green";
+  } else {
+    drop.dataset.type = "normal";
+  }
 
-  // Position the drop randomly across the game width
-  // Subtract 60 pixels to keep drops fully inside the container
-  const gameWidth = document.getElementById("game-container").offsetWidth;
-  const xPosition = Math.random() * (gameWidth - 60);
-  drop.style.left = xPosition + "px";
+  // ...rest of your positioning and sizing code...
 
-  // Make drops fall for 4 seconds
-  drop.style.animationDuration = "4s";
-
-  // Add the new drop to the game screen
   document.getElementById("game-container").appendChild(drop);
 
-  // Remove drops that reach the bottom (weren't clicked)
+  drop.addEventListener("click", function() {
+    if (drop.dataset.type === "green") {
+      score -= 10; // Subtract 10 for green drops
+    } else {
+      score += 1; // Add 1 for normal drops
+    }
+    updateScoreDisplay(); // Make sure you have this function or similar
+    drop.remove();
+  });
+
   drop.addEventListener("animationend", () => {
-    drop.remove(); // Clean up drops that weren't caught
+    drop.remove();
   });
 }
