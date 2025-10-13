@@ -8,15 +8,49 @@
 </head>
 <body>
     <div class="game-wrapper">
-        <h1 class="game-title">Water Drop</h1>
+        <img src="img/cw_logo-horizontal.png" alt="Charity: Water Logo" class="logo">
+        <h1 class="game-title">Rain Catcher</h1>
         <p class="game-tagline">Catch the good drops, avoid the bad ones!</p>
         <div class="score-panel">
             <div class="score">Score: <span id="score">0</span></div>
+            <div class="high-score">High Score: <span id="high-score">0</span></div>
+            <div class="level">Level: <span id="level">1</span></div>
             <div class="timer">Time: <span id="time">30</span>s</div>
+            <div class="lives">Lives: <span id="lives-display">❤️❤️❤️</span></div>
             <button id="start-btn">Start Game</button>
         </div>
         
+        <div class="progress-container">
+            <div class="progress-bar" id="score-progress"></div>
+        </div>
+        
         <div id="game-container">
+            <div id="level-announcement" class="level-announcement">Level <span id="announcement-level">1</span></div>
+        </div>
+    </div>
+    
+    <!-- Game End Modal -->
+    <div id="end-game-modal" class="modal">
+        <div class="modal-content">
+            <h2>Game Over!</h2>
+            <p>Your final score: <span id="final-score">0</span></p>
+            <p>High Score: <span id="modal-high-score">0</span></p>
+            <p id="end-game-message"></p>
+            <button id="play-again-btn">Play Again</button>
+        </div>
+    </div>
+    
+    <!-- Level Complete Modal -->
+    <div id="level-complete-modal" class="modal">
+        <div class="modal-content">
+            <h2>Level Complete!</h2>
+            <p>You've reached <span id="level-score">20</span> points!</p>
+            <p>Next level will require <strong>40</strong> points to complete!</p>
+            <p>Would you like to continue to the next level or end the game?</p>
+            <div class="button-group">
+                <button id="next-level-btn">Continue to Next Level</button>
+                <button id="end-level-btn">End Game</button>
+            </div>
         </div>
     </div>
     
