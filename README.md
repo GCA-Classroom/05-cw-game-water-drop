@@ -3,7 +3,7 @@ In this game, users collect as many falling water drops as possible. Users tap t
 
 ## What’s Already Done
 
-The starter files already include:
+The starter files already include
 
 - A **heading and tagline**
 - A **start button**
