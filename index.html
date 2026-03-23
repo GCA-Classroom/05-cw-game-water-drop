@@ -13,12 +13,47 @@
         <div class="score-panel">
             <div class="score">Score: <span id="score">0</span></div>
             <div class="timer">Time: <span id="time">30</span>s</div>
-            <button id="start-btn">Start Game</button>
+            <div class="game-controls">
+                <label for="difficulty" class="difficulty-label">Difficulty:</label>
+                <select id="difficulty" class="difficulty-select" aria-label="Select game difficulty">
+                    <option value="easy">Easy</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
+                <button id="start-btn">Start Game</button>
+            </div>
         </div>
         
         <div id="game-container">
         </div>
     </div>
+
+    <div id="result-modal" class="result-modal hidden" role="dialog" aria-modal="true" aria-labelledby="result-title">
+        <div class="result-card">
+            <h2 id="result-title" class="result-title">Game Over</h2>
+            <p id="result-message" class="result-message"></p>
+            <div class="next-round-controls">
+                <label for="result-difficulty" class="difficulty-label">Next Round:</label>
+                <select id="result-difficulty" class="difficulty-select" aria-label="Select next round difficulty">
+                    <option value="easy">Easy</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
+            </div>
+            <button id="play-again-btn" class="play-again-btn">Play Again</button>
+            <div id="confetti-container" class="confetti-container" aria-hidden="true"></div>
+        </div>
+    </div>
+
+    <footer class="game-footer">
+        <a
+            href="https://curly-enigma-5gr59944557jcvjqx-3000.app.github.dev/index.html?serverWindowId=d9fb5ce6-6a82-470a-907c-40ce5da69626"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            visit Charity Water's website and donation page!
+        </a>
+    </footer>
     
     <script src="script.js"></script>
 </body>
