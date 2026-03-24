@@ -3,21 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A charity: water game where you collect water drops and avoid obstacles. Play, score, and help bring clean water to everyone!">
+    <meta name="theme-color" content="#003366">
+    <link rel="icon" href="theme/logo-jerrycan.svg" type="image/svg+xml">
     <title>Water Drop Game</title>
+    <link rel="stylesheet" href="theme/colors.css">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="game-wrapper">
-        <h1 class="game-title">Water Drop</h1>
-        <p class="game-tagline">Catch the good drops, avoid the bad ones!</p>
-        <div class="score-panel">
-            <div class="score">Score: <span id="score">0</span></div>
-            <div class="timer">Time: <span id="time">30</span>s</div>
-            <button id="start-btn">Start Game</button>
-        </div>
-        
-        <div id="game-container">
-        </div>
+        <nav class="navbar">
+            <img src="theme/logo-jerrycan.svg" alt="charity: water jerry can logo" class="logo-small" />
+            <img src="theme/logo-text.svg" alt="charity: water text logo, wordmark" class="logo-text" />
+        </nav>
+        <main class="main-menu">
+            <img src="theme/logo-jerrycan.svg" alt="charity: water jerry can logo large" class="logo-main" />
+            <h1 class="game-title">Water Drop</h1>
+            <p class="game-tagline">Catch the good drops, avoid the bad ones!</p>
+            <div class="score-panel">
+                <div class="score">Score: <span id="score">0</span></div>
+                <div class="timer">Time: <span id="time">30</span>s</div>
+                <button id="start-btn">Start Game</button>
+                <button id="reset-btn" class="visually-hidden">Reset</button>
+            </div>
+            <div id="message"></div>
+            <div id="game-container"></div>
+            <canvas id="confetti-canvas" class="confetti-canvas" aria-hidden="true"></canvas>
+        </main>
     </div>
     
     <script src="script.js"></script>

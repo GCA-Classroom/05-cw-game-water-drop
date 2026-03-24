@@ -1,0 +1,21 @@
+/* Centralized color palette for charity: water game */
+
+:root {
+  /* Primary Colors */
+  --cw-yellow: #FFC907;
+  --cw-dark-blue: #003366;
+  --cw-muted-blue: #77A8BB;
+  --cw-off-white: #FFF7E1;
+  --cw-black: #1A1A1A;
+
+  /* Secondary Colors */
+  --cw-light-beige: #F2EDE4;
+  --cw-peach: #EEDBC1;
+  --cw-earth-brown: #BF6C46;
+  --cw-soft-gray: #CBCDC1;
+}
+
+/* Font family for text logo */
+:root {
+  --cw-font: 'Avenir', 'Proxima Nova', Arial, sans-serif;
+}
