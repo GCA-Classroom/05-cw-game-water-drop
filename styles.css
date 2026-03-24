@@ -29,8 +29,14 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #f0f0f0;
-    font-family: Arial, sans-serif;
+    background-color: #FFC907;
+    font-family: 'Avenir', 'Proxima Nova', Arial, sans-serif;
+}
+
+.cw-logo {
+    max-width: 280px;
+    width: 100%;
+    margin-bottom: 5px;
 }
 
 .game-wrapper {
@@ -38,6 +44,7 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 20px;
+    padding: 20px;
 }
 
 .score-panel {
@@ -61,7 +68,7 @@ body {
     width: 800px;
     height: 600px;
     background-color: #e6f7ff;
-    border: 2px solid #333;
+    border: 3px solid #2E9DF7;
     border-radius: 8px;
     position: relative;
     overflow: hidden;
@@ -69,17 +76,24 @@ body {
 
 
 #start-btn {
-    padding: 8px 16px;
-    background-color: #4CAF50;
+    padding: 8px 20px;
+    background-color: #2E9DF7;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
 }
 
 #start-btn:hover {
-    background-color: #45a049;
+    background-color: #1a8ae0;
+}
+
+#start-btn:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
 }
 
 .score {
@@ -90,9 +104,9 @@ body {
 
 .water-drop {
     position: absolute;
-    width: 60px;  /* increased from 40px */
-    height: 60px; /* increased from 40px */
-    background-color: #0099ff;
+    width: 60px;
+    height: 60px;
+    background-color: #2E9DF7;
     border-radius: 50%;
     animation: dropFall linear forwards;
     transform-origin: center;
@@ -107,22 +121,83 @@ body {
 }
 
 .bad-drop {
-    background-color: #ff4444;
+    background-color: #F5402C;
+}
+
+#reset-btn {
+    padding: 8px 20px;
+    background-color: transparent;
+    color: #333;
+    border: 2px solid #333;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+#reset-btn:hover {
+    background-color: rgba(0,0,0,0.08);
+}
+
+.confetti-piece {
+    position: absolute;
+    top: -10px;
+    border-radius: 2px;
+    animation: confettiFall linear forwards;
+    pointer-events: none;
+    z-index: 10;
+}
+
+@keyframes confettiFall {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(650px) rotate(720deg);
+        opacity: 0;
+    }
 }
 
 .game-title {
     color: #131313;
     font-size: 48px;
     margin-top: 0;
-    margin-bottom: 5px;  /* reduced from 20px */
+    margin-bottom: 5px;
     text-align: center;
+    font-weight: 800;
 }
 
 .game-tagline {
-    color: #666;
+    color: #333;
     font-size: 18px;
     margin-bottom: 20px;
     text-align: center;
+}
+
+.end-message {
+    max-width: 800px;
+    width: 100%;
+    padding: 20px;
+    border-radius: 8px;
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.end-message.win {
+    background-color: #4FCB53;
+    color: #fff;
+}
+
+.end-message.lose {
+    background-color: #FF902A;
+    color: #fff;
+}
+
+.hidden {
+    display: none;
 }
 
 @keyframes dropFall {
@@ -135,11 +210,19 @@ body {
 }
 
 @media (max-width: 850px) {
-    .game-wrapper, .score-panel, #game-container {
+    .score-panel, #game-container, .end-message {
         width: 95vw;
     }
-    
+
     #game-container {
         height: 70vh;
+    }
+
+    .game-title {
+        font-size: 36px;
+    }
+
+    .cw-logo {
+        max-width: 200px;
     }
 }
