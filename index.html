@@ -1,25 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Water Drop Game</title>
-    <link rel="stylesheet" href="styles.css">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Rain Rescue: Clean Water Game</title>
+
+<link rel="stylesheet" href="styles.css">
+
 </head>
+
 <body>
-    <div class="game-wrapper">
-        <h1 class="game-title">Water Drop</h1>
-        <p class="game-tagline">Catch the good drops, avoid the bad ones!</p>
-        <div class="score-panel">
-            <div class="score">Score: <span id="score">0</span></div>
-            <div class="timer">Time: <span id="time">30</span>s</div>
-            <button id="start-btn">Start Game</button>
-        </div>
-        
-        <div id="game-container">
-        </div>
+
+<div class="clouds" aria-hidden="true">
+  <div class="cloud" style="--size:1.2; --x:10; --y:15; --delay:0s;"></div>
+  <div class="cloud" style="--size:0.9; --x:60; --y:10; --delay:2.3s;"></div>
+  <div class="cloud" style="--size:1.5; --x:30; --y:4; --delay:1.1s;"></div>
+  <div class="cloud" style="--size:1.1; --x:80; --y:18; --delay:3.2s;"></div>
+</div>
+
+<div class="container">
+
+<h1>🌧 Rain Rescue</h1>
+<p>Catch clean water drops, avoid polluted ones — and grab rainbow drops for bonus points and time!</p>
+
+<div class="stats">
+
+<div class="stat-box">
+<h3>Score</h3>
+<p id="score">0</p>
+</div>
+
+<div class="stat-box">
+<h3>Time</h3>
+<p id="timer">30</p>
+</div>
+
+<div class="stat-box">
+<h3>Milestone</h3>
+<p id="milestone">Hit 50 points for your first milestone!</p>
+</div>
+
+<div class="stat-box">
+<h3>Level</h3>
+<p id="level">1</p>
+</div>
+
+<div class="stat-box">
+<h3>High Score</h3>
+<p id="highScore">0</p>
+</div>
+
+</div>
+
+<div class="achievements" aria-label="Achievements">
+  <h2>Badges</h2>
+  <div class="badge-grid" id="achievementsGrid">
+    <!-- Achievements are injected here -->
+  </div>
+</div>
+
+<div id="gameArea">
+  <div id="bucket" class="bucket" aria-label="Bucket"></div>
+  <div id="overlay" class="overlay hidden" aria-hidden="true">
+    <div class="overlay-card">
+      <h2 id="overlayTitle">Ready?</h2>
+      <p id="overlayText">Move the bucket and catch clean rain drops. Avoid polluted drops!</p>
+      <button id="playAgainBtn">Play</button>
     </div>
-    
-    <script src="script.js"></script>
+  </div>
+</div>
+
+<div class="instructions">Use <strong>mouse</strong> or <strong>←/→</strong> to move the bucket. Catch clean drops, avoid dirty ones.</div>
+
+<div class="buttons">
+<button id="startBtn">Start Game</button>
+<button id="resetBtn">Reset</button>
+<button id="soundToggleBtn" class="secondary">Sound: On</button>
+</div>
+
+<p class="brand">
+Inspired by <a href="https://www.charitywater.org" target="_blank">charity: water</a>
+</p>
+
+<footer class="charity-footer">
+  <p>Learn more and support clean water access:</p>
+  <a href="https://www.charitywater.org" target="_blank" rel="noopener">charity: water main site</a>
+  <a href="https://www.charitywater.org/donate" target="_blank" rel="noopener">Donate to charity: water</a>
+</footer>
+
+</div>
+
+<script src="script.js"></script>
+
 </body>
 </html>
