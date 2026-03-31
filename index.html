@@ -3,23 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A charity: water game where you collect water drops and avoid obstacles. Play, score, and help bring clean water to everyone!">
+    <meta name="theme-color" content="#003366">
+    <link rel="icon" href="img/cw_logo.png" type="image/png">
     <title>Water Drop Game</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="theme/colors.css">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="game-wrapper">
-        <h1 class="game-title">Water Drop</h1>
-        <p class="game-tagline">Catch the good drops, avoid the bad ones!</p>
-        <div class="score-panel">
-            <div class="score">Score: <span id="score">0</span></div>
-            <div class="timer">Time: <span id="time">30</span>s</div>
-            <button id="start-btn">Start Game</button>
-        </div>
-        
-        <div id="game-container">
-        </div>
+        <nav class="navbar">
+            <img src="img/cw_logo-horizontal.png" alt="charity: water logo" class="logo-nav" />
+        </nav>
+        <main class="main-menu">
+            <img src="img/water-can-transparent.png" alt="charity: water jerry can logo large" class="logo-main" />
+            <h1 class="game-title">Water Drop</h1>
+            <p class="game-tagline">Catch the good drops, avoid the bad ones!</p>
+            <div class="difficulty-panel">
+                <label for="difficulty-select">Difficulty:</label>
+                <select id="difficulty-select" aria-label="Select game difficulty">
+                    <option value="easy">Easy</option>
+                    <option value="normal" selected>Normal</option>
+                    <option value="hard">Hard</option>
+                </select>
+            </div>
+            <div class="score-panel">
+                <div class="score">Score: <span id="score">0</span></div>
+                <div class="timer">Time: <span id="time">30</span>s</div>
+                <button id="start-btn">Start Game</button>
+                <button id="reset-btn" class="visually-hidden">Reset</button>
+            </div>
+            <div id="message"></div>
+            <div id="game-container"></div>
+            <canvas id="confetti-canvas" class="confetti-canvas" aria-hidden="true"></canvas>
+        </main>
     </div>
-    
+    <footer class="footer">
+        <p>
+            Learn more at <a href="https://www.charitywater.org/" target="_blank" rel="noopener">charity: water</a> |
+            <a href="https://www.charitywater.org/donate" target="_blank" rel="noopener">Donate</a>
+        </p>
+    </footer>
     <script src="script.js"></script>
 </body>
 </html>
