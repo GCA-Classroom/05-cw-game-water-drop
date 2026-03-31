@@ -4,7 +4,11 @@ let dropMaker;
 let timerInterval;
 let score = 0;
 let timeLeft = 30;
-const WIN_SCORE = 20;
+let winScore = 20;
+let dropInterval = 1000;
+let dropSpeed = 4;
+let difficulty = "normal";
+
 const scoreEl = document.getElementById("score");
 const timeEl = document.getElementById("time");
 const messageEl = document.getElementById("message");
@@ -12,6 +16,28 @@ const startBtn = document.getElementById("start-btn");
 const resetBtn = document.getElementById("reset-btn");
 const gameContainer = document.getElementById("game-container");
 const confettiCanvas = document.getElementById("confetti-canvas");
+const difficultySelect = document.getElementById("difficulty-select");
+
+// Sound effects
+const soundStart = new Audio("sounds/foxboytails-game-start-317318.mp3");
+const soundWin = new Audio("sounds/superpuyofans1234-winner-game-sound-404167.mp3");
+const soundLose = new Audio("sounds/freesound_community-game-over-arcade-6435.mp3");
+
+// Difficulty settings
+const difficultySettings = {
+  easy: { time: 45, winScore: 15, dropInterval: 1200, dropSpeed: 5 },
+  normal: { time: 30, winScore: 20, dropInterval: 1000, dropSpeed: 4 },
+  hard: { time: 30, winScore: 25, dropInterval: 700, dropSpeed: 3.5 }
+};
+
+// Milestone messages
+const milestones = [
+  { score: 5, message: "Great start! Keep going! 🌊" },
+  { score: 10, message: "Halfway there! 💪" },
+  { score: 15, message: "You're doing amazing! Almost there! 🎯" },
+  { score: 25, message: "Wow! You're a water champion! 🏆" }
+];
+let lastMilestone = 0;
 
 const winMessages = [
   "Amazing! You brought clean water! 💧",
@@ -31,23 +57,41 @@ resetBtn.addEventListener("click", resetGame);
 
 function startGame() {
   if (gameRunning) return;
+  
+  // Get difficulty settings
+  difficulty = difficultySelect.value;
+  const settings = difficultySettings[difficulty];
+  timeLeft = settings.time;
+  winScore = settings.winScore;
+  dropInterval = settings.dropInterval;
+  dropSpeed = settings.dropSpeed;
+  
   gameRunning = true;
   score = 0;
-  timeLeft = 30;
+  lastMilestone = 0;
   scoreEl.textContent = score;
   timeEl.textContent = timeLeft;
   messageEl.textContent = "";
   startBtn.style.display = "none";
   resetBtn.classList.remove("visually-hidden");
+  difficultySelect.disabled = true;
   clearDrops();
-  dropMaker = setInterval(createDrop, 1000);
+  
+  // Play start sound
+  soundStart.currentTime = 0;
+  soundStart.play();
+  
+  dropMaker = setInterval(createDrop, dropInterval);
   timerInterval = setInterval(updateTimer, 1000);
 }
 
 function resetGame() {
   stopGame();
   score = 0;
-  timeLeft = 30;
+  lastMilestone = 0;
+  const settings = difficultySettings[difficultySelect.value];
+  timeLeft = settings.time;
+  winScore = settings.winScore;
   scoreEl.textContent = score;
   timeEl.textContent = timeLeft;
   messageEl.textContent = "";
@@ -55,6 +99,7 @@ function resetGame() {
   confettiCanvas.style.display = "none";
   startBtn.style.display = "inline-block";
   resetBtn.classList.add("visually-hidden");
+  difficultySelect.disabled = false;
 }
 
 function stopGame() {
@@ -74,11 +119,17 @@ function updateTimer() {
 function endGame() {
   stopGame();
   clearDrops();
-  let msgArr = score >= WIN_SCORE ? winMessages : loseMessages;
+  difficultySelect.disabled = false;
+  let msgArr = score >= winScore ? winMessages : loseMessages;
   let msg = msgArr[Math.floor(Math.random() * msgArr.length)];
   messageEl.textContent = msg;
-  if (score >= WIN_SCORE) {
+  if (score >= winScore) {
     showConfetti();
+    soundWin.currentTime = 0;
+    soundWin.play();
+  } else {
+    soundLose.currentTime = 0;
+    soundLose.play();
   }
 }
 
@@ -100,9 +151,9 @@ function createDrop() {
   const gameWidth = gameContainer.offsetWidth;
   const xPosition = Math.random() * (gameWidth - 60);
   drop.style.left = xPosition + "px";
-  drop.style.animationDuration = "4s";
+  drop.style.animationDuration = `${dropSpeed}s`;
   drop.addEventListener("animationend", () => {
-    drop.remove();
+    drop.remove(); // Remove drop from DOM when it reaches bottom
   });
   let clicked = false;
   drop.style.pointerEvents = "auto";
@@ -114,12 +165,15 @@ function createDrop() {
       score = Math.max(0, score - 2);
       drop.style.background = "var(--cw-earth-brown)";
       drop.classList.add("shake");
-      setTimeout(() => drop.remove(), 400);
+      setTimeout(() => drop.remove(), 400); // Remove bad drop from DOM
     } else {
       score++;
       drop.style.background = "var(--cw-yellow)";
       drop.classList.add("pop");
-      setTimeout(() => drop.remove(), 500);
+      setTimeout(() => drop.remove(), 500); // Remove good drop from DOM
+      
+      // Check for milestones
+      checkMilestone();
     }
     scoreEl.textContent = score;
     e.preventDefault();
@@ -183,4 +237,27 @@ function showConfetti() {
 function randomConfettiColor() {
   const colors = ["#FFC907", "#2E9DF7", "#8BD1CB", "#4FCB53", "#FF902A", "#F5402C", "#159A48", "#F16061"];
   return colors[Math.floor(Math.random() * colors.length)];
+}
+
+// Check and display milestone messages
+function checkMilestone() {
+  for (let milestone of milestones) {
+    if (score === milestone.score && score > lastMilestone) {
+      lastMilestone = score;
+      showMilestoneMessage(milestone.message);
+      break;
+    }
+  }
+}
+
+function showMilestoneMessage(msg) {
+  const milestoneEl = document.createElement("div");
+  milestoneEl.className = "milestone-message";
+  milestoneEl.textContent = msg;
+  document.querySelector(".main-menu").appendChild(milestoneEl);
+  
+  setTimeout(() => {
+    milestoneEl.classList.add("fade-out");
+    setTimeout(() => milestoneEl.remove(), 500); // Remove milestone from DOM
+  }, 2000);
 }

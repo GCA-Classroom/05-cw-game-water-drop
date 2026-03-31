@@ -1,21 +1,21 @@
 /* Centralized color palette for charity: water game */
 
 :root {
-  /* Primary Colors */
+  /* Primary Colors - Official charity: water branding */
   --cw-yellow: #FFC907;
-  --cw-dark-blue: #003366;
+  --cw-dark-blue: #003A70;
   --cw-muted-blue: #77A8BB;
-  --cw-off-white: #FFF7E1;
-  --cw-black: #1A1A1A;
+  --cw-off-white: #FFFFFF;
+  --cw-black: #000000;
 
   /* Secondary Colors */
-  --cw-light-beige: #F2EDE4;
+  --cw-light-beige: #F6F6F4;
   --cw-peach: #EEDBC1;
-  --cw-earth-brown: #BF6C46;
-  --cw-soft-gray: #CBCDC1;
+  --cw-earth-brown: #8F6C46;
+  --cw-soft-gray: #E5E5E5;
 }
 
-/* Font family for text logo */
+/* Font family - charity: water uses clean, modern sans-serif */
 :root {
-  --cw-font: 'Avenir', 'Proxima Nova', Arial, sans-serif;
+  --cw-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
 }

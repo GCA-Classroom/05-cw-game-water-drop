@@ -53,6 +53,78 @@ body {
     color: var(--cw-black);
     margin: 0;
 }
+.footer {
+    width: 100vw;
+    background: var(--cw-light-beige);
+    color: var(--cw-dark-blue);
+    text-align: center;
+    padding: 18px 0 12px 0;
+    font-size: 1rem;
+    margin-top: 32px;
+    border-top: 1px solid var(--cw-soft-gray);
+}
+.footer a {
+    color: var(--cw-dark-blue);
+    text-decoration: underline;
+    font-weight: 600;
+    transition: color 0.2s;
+}
+.footer a:hover {
+    color: var(--cw-yellow);
+}
+
+.difficulty-panel {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--cw-dark-blue);
+}
+.difficulty-panel label {
+    font-weight: 700;
+}
+.difficulty-panel select {
+    font-size: 1rem;
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1px solid var(--cw-soft-gray);
+    background: #fff;
+    color: var(--cw-dark-blue);
+}
+
+/* Milestone message animation */
+.milestone-message {
+    position: fixed;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--cw-yellow);
+    color: var(--cw-dark-blue);
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    z-index: 100;
+    animation: milestone-slide 0.3s ease-out;
+    pointer-events: none;
+}
+
+.milestone-message.fade-out {
+    animation: milestone-fade 0.5s ease-out forwards;
+}
+
+@keyframes milestone-slide {
+    0% { transform: translateX(-50%) translateY(-30px); opacity: 0; }
+    100% { transform: translateX(-50%) translateY(0); opacity: 1; }
+}
+
+@keyframes milestone-fade {
+    0% { opacity: 1; }
+    100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+}
 
 .navbar {
     width: 100vw;
@@ -64,13 +136,8 @@ body {
     box-sizing: border-box;
     min-height: 56px;
 }
-.logo-small {
-    height: 36px;
-    width: 36px;
-    margin-right: 8px;
-}
-.logo-text {
-    height: 32px;
+.logo-nav {
+    height: 40px;
     width: auto;
 }
 
