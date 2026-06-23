@@ -1,45 +1,118 @@
-// Variables to control game state
-let gameRunning = false; // Keeps track of whether game is active or not
-let dropMaker; // Will store our timer that creates drops regularly
+const scoreEl = document.getElementById("score");
+const timeEl = document.getElementById("time");
+const startBtn = document.getElementById("start-btn");
+const restartBtn = document.getElementById("restart-btn");
+const gameContainer = document.getElementById("game-container");
+const resultMessage = document.getElementById("result-message");
 
-// Wait for button click to start the game
-document.getElementById("start-btn").addEventListener("click", startGame);
+let gameRunning = false;
+let dropMaker;
+let timerInterval;
+let score = 0;
+let timeLeft = 30;
+
+const winMessages = [
+  "You made every drop count! Clean water wins!",
+  "Amazing work! You caught enough drops to bring hope.",
+  "Victory! Your water-saving skills are on brand."
+];
+
+const loseMessages = [
+  "Almost there — try again to reach 20 drops!",
+  "Nice attempt! Keep practicing to catch more water.",
+  "The water needs you again. Go for a stronger round!"
+];
+
+startBtn.addEventListener("click", startGame);
+restartBtn.addEventListener("click", restartGame);
 
 function startGame() {
-  // Prevent multiple games from running at once
   if (gameRunning) return;
 
   gameRunning = true;
+  score = 0;
+  timeLeft = 30;
+  scoreEl.textContent = score;
+  timeEl.textContent = timeLeft;
+  resultMessage.textContent = "";
+  startBtn.textContent = "Playing...";
+  startBtn.disabled = true;
+  restartBtn.disabled = false;
+  gameContainer.classList.remove("game-over");
 
-  // Create new drops every second (1000 milliseconds)
-  dropMaker = setInterval(createDrop, 1000);
+  document.querySelectorAll(".water-drop").forEach((drop) => drop.remove());
+
+  dropMaker = setInterval(createDrop, 900);
+  timerInterval = setInterval(updateTimer, 1000);
+}
+
+function restartGame() {
+  if (gameRunning) {
+    clearInterval(dropMaker);
+    clearInterval(timerInterval);
+    gameRunning = false;
+  }
+
+  startGame();
+}
+
+function updateTimer() {
+  timeLeft -= 1;
+  timeEl.textContent = timeLeft;
+
+  if (timeLeft <= 0) {
+    endGame();
+  }
 }
 
 function createDrop() {
-  // Create a new div element that will be our water drop
   const drop = document.createElement("div");
   drop.className = "water-drop";
 
-  // Make drops different sizes for visual variety
-  const initialSize = 60;
-  const sizeMultiplier = Math.random() * 0.8 + 0.5;
+  const initialSize = 48;
+  const sizeMultiplier = Math.random() * 0.8 + 0.6;
   const size = initialSize * sizeMultiplier;
   drop.style.width = drop.style.height = `${size}px`;
 
-  // Position the drop randomly across the game width
-  // Subtract 60 pixels to keep drops fully inside the container
-  const gameWidth = document.getElementById("game-container").offsetWidth;
-  const xPosition = Math.random() * (gameWidth - 60);
-  drop.style.left = xPosition + "px";
+  const gameWidth = gameContainer.offsetWidth;
+  const xPosition = Math.random() * Math.max(gameWidth - size, 0);
+  drop.style.left = `${xPosition}px`;
 
-  // Make drops fall for 4 seconds
-  drop.style.animationDuration = "4s";
+  drop.style.animationDuration = `${3.5 + Math.random() * 1.2}s`;
 
-  // Add the new drop to the game screen
-  document.getElementById("game-container").appendChild(drop);
+  drop.addEventListener("click", () => {
+    if (!gameRunning) return;
 
-  // Remove drops that reach the bottom (weren't clicked)
-  drop.addEventListener("animationend", () => {
-    drop.remove(); // Clean up drops that weren't caught
+    score += 1;
+    scoreEl.textContent = score;
+    drop.classList.add("caught");
+    drop.remove();
   });
+
+  drop.addEventListener("animationend", () => {
+    drop.remove();
+  });
+
+  gameContainer.appendChild(drop);
+}
+
+function endGame() {
+  gameRunning = false;
+  clearInterval(dropMaker);
+  clearInterval(timerInterval);
+  startBtn.textContent = "Play Again";
+  startBtn.disabled = false;
+  restartBtn.disabled = false;
+  timeEl.textContent = 0;
+
+  document.querySelectorAll(".water-drop").forEach((drop) => drop.remove());
+
+  const messages = score >= 20 ? winMessages : loseMessages;
+  const chosenMessage = messages[Math.floor(Math.random() * messages.length)];
+  const resultText = score >= 20
+    ? `You scored ${score} drops! ${chosenMessage}`
+    : `You scored ${score} drops. ${chosenMessage}`;
+
+  resultMessage.textContent = resultText;
+  gameContainer.classList.add("game-over");
 }

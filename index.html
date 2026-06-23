@@ -7,19 +7,36 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="game-wrapper">
-        <h1 class="game-title">Water Drop</h1>
-        <p class="game-tagline">Catch the good drops, avoid the bad ones!</p>
-        <div class="score-panel">
-            <div class="score">Score: <span id="score">0</span></div>
-            <div class="timer">Time: <span id="time">30</span>s</div>
-            <button id="start-btn">Start Game</button>
+    <aside class="nameplate">
+        <img src="img/cw_logo-horizontal.png" alt="charity: water logo" class="nameplate-logo">
+    </aside>
+
+    <main class="game-wrapper">
+        <div class="page-grid">
+            <aside class="control-card">
+                <div>
+                    <h1 class="game-title">Water Game</h1>
+                    <p class="game-tagline">Catch every falling drop to help water reach people who need it most.</p>
+                </div>
+                <div class="hud-panel">
+                    <div class="hud-item"><span>Score:</span> <strong id="score">0</strong></div>
+                    <div class="hud-item"><span>Time:</span> <strong id="time">30</strong>s</div>
+                </div>
+                <div class="button-group">
+                    <button id="start-btn" class="action-btn">Play</button>
+                    <button id="restart-btn" class="action-btn" type="button">Restart</button>
+                </div>
+            </aside>
+
+            <div class="game-card">
+                <div class="game-frame">
+                    <div id="game-container" class="game-stage"></div>
+                </div>
+                <div id="result-message" class="result-message" aria-live="polite"></div>
+            </div>
         </div>
-        
-        <div id="game-container">
-        </div>
-    </div>
-    
+    </main>
+
     <script src="script.js"></script>
 </body>
 </html>
