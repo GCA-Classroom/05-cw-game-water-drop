@@ -26,16 +26,38 @@
                     <button id="start-btn" class="action-btn">Play</button>
                     <button id="restart-btn" class="action-btn" type="button">Restart</button>
                 </div>
+                <div id="result-message-slot"></div>
+                <div class="difficulty-panel">
+                    <label for="difficulty-select" class="difficulty-label">Difficulty</label>
+                    <select id="difficulty-select" class="difficulty-select" aria-label="Select game difficulty">
+                        <option value="easy">Easy</option>
+                        <option value="normal" selected>Normal</option>
+                        <option value="hard">Hard</option>
+                    </select>
+                    <div id="difficulty-feedback" class="difficulty-feedback" aria-live="polite"></div>
+                </div>
             </aside>
 
             <div class="game-card">
                 <div class="game-frame">
                     <div id="game-container" class="game-stage"></div>
                 </div>
-                <div id="result-message" class="result-message" aria-live="polite"></div>
             </div>
         </div>
     </main>
+
+    <footer class="cw-footer" aria-label="charity water resources">
+        <div class="cw-footer-inner">
+            <h2 class="cw-footer-title">Learn More About charity: water</h2>
+            <p class="cw-footer-text">Explore the mission, see how your support helps, and take action to bring clean water to communities around the world.</p>
+            <nav class="cw-footer-links" aria-label="charity water links">
+                <a href="https://www.charitywater.org/" target="_blank" rel="noopener noreferrer">Visit the Website</a>
+                <a href="https://www.charitywater.org/donate" target="_blank" rel="noopener noreferrer">Donate</a>
+                <a href="https://www.charitywater.org/about" target="_blank" rel="noopener noreferrer">About charity: water</a>
+                <a href="https://www.charitywater.org/our-work" target="_blank" rel="noopener noreferrer">Our Mission & Work</a>
+            </nav>
+        </div>
+    </footer>
 
     <script src="script.js"></script>
 </body>

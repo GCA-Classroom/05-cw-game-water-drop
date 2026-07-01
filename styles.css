@@ -26,13 +26,15 @@ Fonts:
 
 body {
     min-height: 100vh;
-    padding: 100px 24px 24px 24px;
+    padding: 100px 24px 90px 24px;
     background: #2E9DF7;
     font-family: Avenir, "Avenir Next", Helvetica, Arial, sans-serif;
     color: #122a44;
     display: flex;
     justify-content: center;
     position: relative;
+    flex-direction: column;
+    align-items: center;
 }
 
 img {
@@ -64,29 +66,91 @@ img {
     flex-direction: column;
     gap: 24px;
     width: 100%;
-    max-width: 1200px;
+    max-width: 1280px;
     align-items: center;
+}
+
+.cw-footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 10px 24px;
+    background-color: #e9f7ff;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.06);
+    z-index: 90;
+}
+
+.cw-footer-inner {
+    width: 100%;
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0;
+    letter-spacing: 0.33px;
+}
+
+.cw-footer-title {
+    font-family: "Proxima Nova";
+    font-size: 1rem;
+    color: #0f3f6c;
+    margin-bottom: 6px;
+    text-align: center;
+    text-justify: inter-word;
+}
+
+.cw-footer-text {
+    font-size: 0.82rem;
+    color: #1f4d48;
+    line-height: 1.45;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.cw-footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    text-align: center;
+    text-justify: inter-word;
+}
+
+.cw-footer-links a {
+    display: inline;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #0f3f6c;
+    text-decoration: underline;
+    font-weight: 700;
+    font-size: 9px;
+}
+
+.cw-footer-links a:hover {
+    color: #122a44;
 }
 
 .page-grid {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(280px, 360px) minmax(0, 1fr);
     gap: 32px;
-    justify-content: center;
+    align-items: start;
     width: 100%;
-    max-width: 1000px;
+    max-width: 1240px;
 }
 
 .game-card {
     display: flex;
-    gap: 20px;
-    align-items: center;
+    flex-direction: column;
+    gap: 18px;
+    align-items: stretch;
+    min-width: 0;
 }
 
 .game-frame {
-    width: clamp(800px, 100%, 1000px);
-    height: clamp(500px, 100%, 600px);
-    aspect-ratio: 1/1;
+    width: 100%;
+    max-width: 840px;
+    aspect-ratio: 4 / 3;
     background: #ffffff;
     border: 2px solid rgba(0, 0, 0, 0.08);
     border-radius: 28px;
@@ -100,6 +164,7 @@ img {
 .game-stage {
     width: 100%;
     height: 100%;
+    min-height: 420px;
     position: relative;
     background: #ffffff;
 }
@@ -132,6 +197,7 @@ img {
 .result-message {
     width: 100%;
     min-height: 60px;
+    margin-top: 6px;
     padding: 14px 18px;
     border-radius: 16px;
     background-color: #fff9df;
@@ -145,6 +211,61 @@ img {
     line-height: 1.4;
     box-shadow: 0 10px 24px rgba(69, 115, 130, 0.08);
     font-family: Avenir, "Avenir Next", Helvetica, Arial, sans-serif;
+}
+
+.difficulty-panel {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 6px;
+}
+
+.difficulty-label {
+    font-family: Avenir, "Avenir Next", Helvetica, Arial, sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #0f3f6c;
+}
+
+.difficulty-select {
+    width: 100%;
+    min-height: 46px;
+    border-radius: 12px;
+    border: 2px solid #8BD1CB;
+    background: #ffffff;
+    color: #122a44;
+    font-family: Avenir, "Avenir Next", Helvetica, Arial, sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 10px 12px;
+    cursor: pointer;
+}
+
+.difficulty-select:focus {
+    outline: none;
+    border-color: #2E9DF7;
+    box-shadow: 0 0 0 3px rgba(46, 157, 247, 0.2);
+}
+
+.difficulty-select:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.difficulty-feedback {
+    min-height: 40px;
+}
+
+.difficulty-note {
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: #e9f7ff;
+    border: 1px solid #9fd7ff;
+    color: #11456f;
+    font-size: 0.95rem;
+    line-height: 1.35;
+    font-weight: 700;
 }
 
 .control-card {
@@ -161,19 +282,23 @@ img {
 
 .control-card .game-title {
     margin-bottom: 8px;
+    font-family: "Proxima Nova";
 }
 
 .button-group {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    gap: 24px;
+    gap: 12px;
     width: 100%;
 }
 
 .action-btn {
-    width: clamp(75px, 100%, 125px);
-    height: clamp(25px, 22vw, 75px);
+    flex: 1 1 0;
+    min-width: 0;
+    width: auto;
+    min-height: 56px;
+    padding: 12px 14px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -206,12 +331,20 @@ img {
     border-radius: 50%;
     animation: dropFall linear forwards;
     cursor: pointer;
+    touch-action: manipulation;
+    user-select: none;
     box-shadow: 0 14px 24px rgba(17, 86, 144, 0.2);
     border: 2px solid rgba(255, 255, 255, 0.45);
 }
 
 .water-drop:hover {
     transform: scale(1.05);
+}
+
+.water-drop.bad-drop {
+    background: radial-gradient(circle at 40% 35%, #6a6a6a 0%, #121212 70%);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 14px 24px rgba(0, 0, 0, 0.35);
 }
 
 .water-drop.caught {
@@ -237,21 +370,74 @@ img {
     }
 }
 
-@media (max-width: 920px) {
+@media (max-width: 1366px) {
+    .page-grid {
+        gap: 24px;
+    }
+
+    .game-frame {
+        max-width: 760px;
+    }
+}
+
+@media (max-width: 1024px) {
+    body {
+        padding: 92px 18px 18px;
+    }
+
+    .page-grid {
+        grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
+        gap: 18px;
+    }
+
+    .game-stage {
+        min-height: 380px;
+    }
+
+    .action-btn {
+        font-size: 1.15rem;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-bottom: 110px;
+    }
+
     .page-grid {
         grid-template-columns: 1fr;
-        align-items: center;
+        gap: 20px;
     }
 
     .control-card {
         width: 100%;
-        max-width: 500px;
+        max-width: none;
+    }
+
+    .game-frame {
+        max-width: none;
+    }
+
+    .game-stage {
+        min-height: 360px;
+    }
+
+    .cw-footer {
+        padding: 8px 14px;
     }
 }
 
 @media (max-width: 650px) {
     body {
-        padding: 16px;
+        padding: 86px 14px 14px;
+    }
+
+    .nameplate {
+        padding: 12px 14px;
+    }
+
+    .nameplate-logo {
+        height: 44px;
     }
 
     .game-wrapper {
@@ -259,16 +445,80 @@ img {
     }
 
     .game-title {
-        font-size: 2.4rem;
+        font-size: 2rem;
+    }
+
+    .hud-panel {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
     }
 
     .button-group {
-        gap: 18px;
+        flex-direction: column;
+        gap: 10px;
     }
 
     .action-btn {
-        width: min(100%, 320px);
-        height: 160px;
+        width: 100%;
+        min-height: 50px;
+        font-size: 1.1rem;
+    }
+
+    .game-stage {
+        min-height: 300px;
+    }
+}
+
+@media (max-width: 430px) {
+    body {
+        padding: 82px 10px 120px;
+    }
+
+    .nameplate {
+        padding: 10px;
+    }
+
+    .nameplate-logo {
+        height: 38px;
+    }
+
+    .control-card {
+        padding: 12px;
+    }
+
+    .game-title {
+        font-size: 1.7rem;
+    }
+
+    .hud-item {
+        font-size: 1rem;
+    }
+
+    .result-message {
+        font-size: 0.95rem;
+        padding: 12px;
+    }
+
+    .difficulty-note {
+        font-size: 0.9rem;
+    }
+
+    .cw-footer-title {
+        font-size: 0.92rem;
+    }
+
+    .cw-footer-text {
+        font-size: 0.76rem;
+        margin-bottom: 6px;
+    }
+
+    .cw-footer-links {
+        gap: 6px;
+    }
+
+    .game-stage {
+        min-height: 260px;
     }
 }
 
