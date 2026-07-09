@@ -1,18 +1,164 @@
 // Variables to control game state
 let gameRunning = false; // Keeps track of whether game is active or not
+let isPaused = false;
 let dropMaker; // Will store our timer that creates drops regularly
+let timerMaker;
+let score = 0;
+let timeLeft = 30;
+
+const winningMessages = [
+  "Great job! You kept the water flowing.",
+  "You won! That was a strong save.",
+  "Excellent work! The drops didn't stand a chance."
+];
+
+const losingMessages = [
+  "Try again! You can catch more drops next time.",
+  "Good effort! Keep practicing your splash skills.",
+  "Almost there! Give it another shot."
+];
+
+const startButton = document.getElementById("start-btn");
+const pauseButton = document.getElementById("pause-btn");
+const resetButton = document.getElementById("reset-btn");
+const gameContainer = document.getElementById("game-container");
+const gameMessage = document.getElementById("game-message");
+
+function updateTime() {
+  document.getElementById("time").textContent = timeLeft;
+}
+
+function updateScore() {
+  document.getElementById("score").textContent = score;
+}
+
+function showPlusOneEffect(drop) {
+  const gameContainer = document.getElementById("game-container");
+  const effect = document.createElement("div");
+  const dropRect = drop.getBoundingClientRect();
+  const containerRect = gameContainer.getBoundingClientRect();
+
+  effect.className = "score-fx";
+  effect.textContent = "+1";
+  effect.style.left = `${dropRect.left - containerRect.left + dropRect.width / 2}px`;
+  effect.style.top = `${dropRect.top - containerRect.top + dropRect.height / 2}px`;
+
+  gameContainer.appendChild(effect);
+
+  effect.addEventListener("animationend", () => {
+    effect.remove();
+  });
+}
 
 // Wait for button click to start the game
-document.getElementById("start-btn").addEventListener("click", startGame);
+startButton.addEventListener("click", startGame);
+pauseButton.addEventListener("click", togglePause);
+resetButton.addEventListener("click", resetGame);
+
+function getRandomMessage(messages) {
+  return messages[Math.floor(Math.random() * messages.length)];
+}
+
+function showGameMessage(finalScore) {
+  const isWinner = finalScore >= 20;
+  const message = getRandomMessage(isWinner ? winningMessages : losingMessages);
+
+  gameMessage.textContent = `${isWinner ? "You win!" : "Try again!"} ${message}`;
+  gameMessage.className = isWinner ? "game-message win" : "game-message lose";
+}
+
+function clearGameMessage() {
+  gameMessage.textContent = "";
+  gameMessage.className = "";
+}
+
+function clearActiveDrops() {
+  document.querySelectorAll(".water-drop, .score-fx").forEach((element) => element.remove());
+}
+
+function resetGame() {
+  clearInterval(dropMaker);
+  clearInterval(timerMaker);
+  gameRunning = false;
+  isPaused = false;
+  score = 0;
+  timeLeft = 30;
+
+  updateScore();
+  updateTime();
+  clearGameMessage();
+  clearActiveDrops();
+  gameContainer.classList.remove("paused");
+  pauseButton.disabled = true;
+  pauseButton.textContent = "Pause";
+}
 
 function startGame() {
   // Prevent multiple games from running at once
   if (gameRunning) return;
 
   gameRunning = true;
+  isPaused = false;
+  score = 0;
+  timeLeft = 30;
+  updateScore();
+  updateTime();
+  clearGameMessage();
+  pauseButton.disabled = false;
+  pauseButton.textContent = "Pause";
 
   // Create new drops every second (1000 milliseconds)
   dropMaker = setInterval(createDrop, 1000);
+  timerMaker = setInterval(() => {
+    if (isPaused) return;
+
+    timeLeft -= 1;
+    updateTime();
+
+    if (timeLeft <= 0) {
+      endGame();
+    }
+  }, 1000);
+}
+
+function endGame() {
+  gameRunning = false;
+  isPaused = false;
+  clearInterval(dropMaker);
+  clearInterval(timerMaker);
+  pauseButton.disabled = true;
+  pauseButton.textContent = "Pause";
+  gameContainer.classList.remove("paused");
+  clearActiveDrops();
+  showGameMessage(score);
+}
+
+function togglePause() {
+  if (!gameRunning) return;
+
+  isPaused = !isPaused;
+
+  if (isPaused) {
+    clearInterval(dropMaker);
+    clearInterval(timerMaker);
+    pauseButton.textContent = "Resume";
+    gameContainer.classList.add("paused");
+    return;
+  }
+
+  pauseButton.textContent = "Pause";
+  gameContainer.classList.remove("paused");
+  dropMaker = setInterval(createDrop, 1000);
+  timerMaker = setInterval(() => {
+    if (isPaused) return;
+
+    timeLeft -= 1;
+    updateTime();
+
+    if (timeLeft <= 0) {
+      endGame();
+    }
+  }, 1000);
 }
 
 function createDrop() {
@@ -36,10 +182,20 @@ function createDrop() {
   drop.style.animationDuration = "4s";
 
   // Add the new drop to the game screen
-  document.getElementById("game-container").appendChild(drop);
+  gameContainer.appendChild(drop);
+
+  drop.addEventListener("click", () => {
+    if (!gameRunning || isPaused) return;
+    score += 1;
+    updateScore();
+    showPlusOneEffect(drop);
+    drop.remove();
+  });
 
   // Remove drops that reach the bottom (weren't clicked)
   drop.addEventListener("animationend", () => {
-    drop.remove(); // Clean up drops that weren't caught
+    if (drop.isConnected) {
+      drop.remove(); // Clean up drops that weren't caught
+    }
   });
 }
