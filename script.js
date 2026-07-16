@@ -5,6 +5,14 @@ let dropMaker; // Will store our timer that creates drops regularly
 let timerMaker;
 let score = 0;
 let timeLeft = 30;
+let selectedMode = null;
+let pointsPerClick = 1;
+
+const modePoints = {
+  easy: 5,
+  medium: 3,
+  hard: 1
+};
 
 const winningMessages = [
   "Great job! You kept the water flowing.",
@@ -23,6 +31,12 @@ const pauseButton = document.getElementById("pause-btn");
 const resetButton = document.getElementById("reset-btn");
 const gameContainer = document.getElementById("game-container");
 const gameMessage = document.getElementById("game-message");
+const modeLabel = document.getElementById("mode-label");
+const startScreen = document.getElementById("start-screen");
+const startScreenButton = document.getElementById("start-screen-btn");
+const modeButtons = document.querySelectorAll(".mode-btn");
+
+startButton.disabled = true;
 
 function updateTime() {
   document.getElementById("time").textContent = timeLeft;
@@ -32,14 +46,14 @@ function updateScore() {
   document.getElementById("score").textContent = score;
 }
 
-function showPlusOneEffect(drop) {
+function showScoreEffect(drop, points) {
   const gameContainer = document.getElementById("game-container");
   const effect = document.createElement("div");
   const dropRect = drop.getBoundingClientRect();
   const containerRect = gameContainer.getBoundingClientRect();
 
   effect.className = "score-fx";
-  effect.textContent = "+1";
+  effect.textContent = `+${points}`;
   effect.style.left = `${dropRect.left - containerRect.left + dropRect.width / 2}px`;
   effect.style.top = `${dropRect.top - containerRect.top + dropRect.height / 2}px`;
 
@@ -54,6 +68,30 @@ function showPlusOneEffect(drop) {
 startButton.addEventListener("click", startGame);
 pauseButton.addEventListener("click", togglePause);
 resetButton.addEventListener("click", resetGame);
+startScreenButton.addEventListener("click", startGame);
+
+modeButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const chosenMode = button.dataset.mode;
+    const modeScoreValue = Number(button.dataset.points);
+
+    selectedMode = chosenMode;
+    pointsPerClick = modeScoreValue;
+    modeLabel.textContent = `${capitalizeMode(selectedMode)} (+${pointsPerClick})`;
+    startScreenButton.disabled = false;
+    startButton.disabled = false;
+
+    modeButtons.forEach((modeButton) => {
+      const isSelected = modeButton.dataset.mode === selectedMode;
+      modeButton.classList.toggle("selected", isSelected);
+      modeButton.setAttribute("aria-checked", String(isSelected));
+    });
+  });
+});
+
+function capitalizeMode(mode) {
+  return mode.charAt(0).toUpperCase() + mode.slice(1);
+}
 
 function getRandomMessage(messages) {
   return messages[Math.floor(Math.random() * messages.length)];
@@ -89,6 +127,7 @@ function resetGame() {
   clearGameMessage();
   clearActiveDrops();
   gameContainer.classList.remove("paused");
+  startScreen.classList.remove("hidden");
   pauseButton.disabled = true;
   pauseButton.textContent = "Pause";
 }
@@ -96,11 +135,13 @@ function resetGame() {
 function startGame() {
   // Prevent multiple games from running at once
   if (gameRunning) return;
+  if (!selectedMode) return;
 
   gameRunning = true;
   isPaused = false;
   score = 0;
   timeLeft = 30;
+  startScreen.classList.add("hidden");
   updateScore();
   updateTime();
   clearGameMessage();
@@ -130,6 +171,7 @@ function endGame() {
   pauseButton.textContent = "Pause";
   gameContainer.classList.remove("paused");
   clearActiveDrops();
+  startScreen.classList.remove("hidden");
   showGameMessage(score);
 }
 
@@ -186,9 +228,9 @@ function createDrop() {
 
   drop.addEventListener("click", () => {
     if (!gameRunning || isPaused) return;
-    score += 1;
+    score += pointsPerClick;
     updateScore();
-    showPlusOneEffect(drop);
+    showScoreEffect(drop, pointsPerClick);
     drop.remove();
   });
 
