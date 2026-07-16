@@ -8,16 +8,39 @@
 </head>
 <body>
     <div class="game-wrapper">
+        <img src="img/cw_logo-horizontal.png" alt="charity: water" class="brand-logo">
         <h1 class="game-title">Water Drop</h1>
         <p class="game-tagline">Catch the good drops, avoid the bad ones!</p>
         <div class="score-panel">
             <div class="score">Score: <span id="score">0</span></div>
             <div class="timer">Time: <span id="time">30</span>s</div>
+            <div class="mode">Mode: <span id="mode-label">None</span></div>
             <button id="start-btn">Start Game</button>
+            <button id="pause-btn" disabled>Pause</button>
+            <button id="reset-btn">Reset</button>
         </div>
+
+        <div id="game-message" aria-live="polite"></div>
         
         <div id="game-container">
+            <div id="start-screen" class="start-screen" aria-live="polite">
+                <h2>Choose Difficulty</h2>
+                <p>Select a mode before starting the game.</p>
+                <div class="mode-grid" role="radiogroup" aria-label="Difficulty modes">
+                    <button class="mode-btn" data-mode="easy" data-points="5" role="radio" aria-checked="false">Easy <span>+5 per click</span></button>
+                    <button class="mode-btn" data-mode="medium" data-points="3" role="radio" aria-checked="false">Medium <span>+3 per click</span></button>
+                    <button class="mode-btn" data-mode="hard" data-points="1" role="radio" aria-checked="false">Hard <span>+1 per click</span></button>
+                </div>
+                <button id="start-screen-btn" disabled>Start</button>
+            </div>
         </div>
+
+        <footer class="game-footer">
+            <p>
+                Learn more at the official charity: water website:
+                <a href="https://www.charitywater.org/" target="_blank" rel="noopener noreferrer">charitywater.org</a>
+            </p>
+        </footer>
     </div>
     
     <script src="script.js"></script>
